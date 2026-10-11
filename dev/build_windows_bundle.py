@@ -344,8 +344,10 @@ def test() -> None:
     r = py_run("-c", (
         "import streamlit, pandas, numpy, matplotlib, openpyxl, docx, tkinter;"
         "import matplotlib.pyplot as plt; plt.plot([0, 1]); plt.savefig('t.png');"
-        "tcl = tkinter.Tcl(); tk = tcl.eval('package require Tk');"
-        "print('tcl', tcl.eval('info patchlevel'), 'tk', tk, 'streamlit', streamlit.__version__)"))
+        # a real (hidden) Tk window, as the Browse button opens; Tk is loaded
+        # by tkinter itself, not by Tcl's package search
+        "w = tkinter.Tk(); w.withdraw(); tk = w.tk.eval('info patchlevel'); w.destroy();"
+        "print('tk', tk, 'streamlit', streamlit.__version__)"))
     print(r.stdout.strip())
     (app / "t.png").unlink()
 
