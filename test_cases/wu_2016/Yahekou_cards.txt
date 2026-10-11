@@ -1,0 +1,110 @@
+Time_Step                           0.5       ! in seconds
+
+Simulation_Period                   0.0, 2220.0   !Start time, Ending time, in seconds
+
+Water_Density                       1000.0    ! in kg/m^3
+
+Water_Kinematic_Viscosity           0.000001  ! m^2/s
+
+Embankment_Height                   5.6       ! in m
+Embankment_Crest_Width              4.0       ! in m
+Embankment_Upstream_Slope           0.3333    ! Vertical/Horizontal
+Embankment_Downstream_Slope         0.4       ! Vertical/Horizontal
+Embankment_Length                   41.0      ! in m
+
+Breach_Mode                         1         !=1, Overtopping; =2, Piping
+    
+Overtopping_Mode                    3         !=1 for homogeneous overtopping
+                                              !=2 for homegeneous headcut
+                                              !=3 for claycore overtopping
+  
+Initial_Overtopping_Breach          1.3, 1.5  !Pilot breach depth & width, in meter
+
+Breach_Location                     2.0       ! no units
+
+Hard_Bottom_Elevation               0.0       ! in meter
+
+Breach_Manning_n                    0.025     ! in SI unit, s/m^(1/3)
+
+Overtop_Entrance_Head_Loss_Coef     0.18      ! unitless
+
+Noncohesive_or_Cohesive_Sediment    1         !=1 noncohesive; =2 cohesive
+
+Sediment_Diameter                   0.0008    ! in meter
+Sediment_Specific_Gravity           2.65      ! Unitless
+Sediment_Porosity                   0.43      ! Unitless 
+Sediment_Clay_Content               0.0       ! in fraction, between 0.0 and 1.0 
+Sediment_Cohesion                   0.0       ! in Pa 
+Sediment_Internal_Friction          0.55      ! Tangent of Friction Angle, unitless
+
+Noncohesive_Sed_Adaptation_Lamda    3.0
+
+Scaling_Noncoh_SedTran              1.0     
+
+Initial_Up&Downstream_WSL           4.35, 0.05  !Up and Downstream Initial Water Levels, in m
+
+Core_Height                         5.1       ! in m
+Core_Crest_Width                    0.8       ! in m
+Core_Upstream_Slope                 5.88      ! Vertical/Horizontal
+Core_Downstream_Slope               5.88      ! Vertical/Horizontal
+Core_Center_Location                -1.6      ! in m, distance of core crest center to embankment crest center (positive downstream)
+
+Core_Manning_n                      0.016
+Core_Sediment_Diameter              0.00003   ! in meter 
+Core_Sediment_Specific_Gravity      2.65      ! Unitless 
+Core_Sediment_Porosity              0.38      ! Unitless 
+Core_Sediment_Clay_Content          0.29      ! Unitless 
+Core_Sediment_Cohesion              21000.0   ! in Pa 
+Core_Sediment_Internal_Friction     0.325     ! Tangent of Friction Angle, unitless
+
+Core_Noncohesive_or_Cohesive        2
+
+Core_Cohesive_Erosion_kd            3.9       ! in cm^3/N-s       
+Core_Cohesive_Erosion_Tauc          0.15      ! in Pa
+
+Clay_Cover_at_Downstream_Slope      1, 0.016, 0.3  ! Manning n, clay cover thickness in meter
+
+Clay_Cover_Soil_Sediment_Diameter   0.00003   ! in meter
+Clay_Cover_Soil_Specific_Graveity   2.65      ! Unitless
+Clay_Cover_Soil_Porosity            0.38      ! Unitless
+Clay_Cover_Soil_Clay_Content        0.29      ! Unitless
+Clay_Cover_Soil_Erosion_kd          3.9       ! in cm^3/N-s
+Clay_Cover_Soil_Erosion_Tauc        0.15      ! in Pa
+
+Downstream_WSL_Time_Series         12
+                                   0	0
+                                   0.26667	0
+                                   0.28333	0.05
+                                   0.36667	0.8
+                                   0.4	1.15
+                                   0.45	1.45
+                                   0.48333	2.05
+                                   0.53333	2.05
+                                   0.55	2.05
+                                   0.56667	2.05
+                                   0.6	1.95
+                                   0.61667	1.75
+
+Upstream_WSL_Time_Series            14
+                                    0   	4.3
+                                    0.06667	5.13
+                                    0.18333	5.32
+                                    0.26667	5.46
+                                    0.28333	5.45
+                                    0.36667	5.2
+                                    0.4	        4.96
+                                    0.45	5.45
+                                    0.48333	5.68
+                                    0.53333	5.25
+                                    0.55	5.2
+                                    0.56667	5.25
+                                    0.6 	5.1
+                                    0.61667	4.8
+
+
+Breach_Phase_Time                   3, 0.39   
+
+
+
+END_PARAMETERS  
+

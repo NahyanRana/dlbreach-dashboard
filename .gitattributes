@@ -1,0 +1,8 @@
+# Windows batch files need CRLF line endings: with LF only, cmd.exe can
+# fail to find labels such as :serve in the launcher.
+*.bat text eol=crlf
+*.py  text eol=lf
+*.md  text eol=lf
+*.out binary
+# Prof. Wu's files are kept byte for byte as published (CRLF)
+test_cases/wu_2016/* -text

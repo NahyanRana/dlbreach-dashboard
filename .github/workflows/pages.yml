@@ -1,0 +1,58 @@
+name: Publish browser version
+
+# Run by hand from the Actions tab once the browser version has passed the
+# checklist in docs/BROWSER_CHECKLIST.md. It publishes only the files the
+# browser version needs (index.html and the dashboard modules) to
+# https://nahyanrana.github.io/dlbreach-dashboard/
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONUTF8: "1"
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - run: python test_core.py
+      - run: python test_app_headless.py
+
+  deploy:
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Collect the browser files
+        run: |
+          mkdir site
+          cp index.html app.py dlbreach_*.py LICENSE site/
+          cp -r test_cases site/
+          touch site/.nojekyll
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4

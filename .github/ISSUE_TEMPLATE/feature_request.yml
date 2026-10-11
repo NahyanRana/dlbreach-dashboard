@@ -1,0 +1,23 @@
+name: Feature request
+description: Suggest an improvement or a new capability.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: What you are trying to do
+      description: The task or analysis, and where the dashboard falls short.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would help
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: >-
+        For new calculations or comparisons, the publication or guideline
+        they come from. Anything the dashboard computes outside DLBreach is
+        cited where it is shown.

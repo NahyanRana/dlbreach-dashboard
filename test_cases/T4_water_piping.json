@@ -1,0 +1,164 @@
+{
+ "case_name": "T4_water_pipe",
+ "notes": "Test 4: water-retaining dam, cohesive fill, piping 3 m above the base. Dummy stage-storage.",
+ "time_step": 0.5,
+ "sim_start": 0.0,
+ "sim_end": 43200.0,
+ "water_density": 1000.0,
+ "water_viscosity": 1e-06,
+ "emb_height": 12.0,
+ "emb_crest_width": 5.0,
+ "emb_us_slope": 0.3333333333333333,
+ "emb_ds_slope": 0.4,
+ "emb_length": 300.0,
+ "breach_mode": 2,
+ "overtopping_mode": 1,
+ "pilot_depth": 0.5,
+ "pilot_width": 2.0,
+ "pipe_depth": 9.0,
+ "pipe_width": 0.2,
+ "pipe_head_loss": 0.05,
+ "breach_location": 2.0,
+ "hard_bottom_elev": 0.0,
+ "manning_n": 0.0264,
+ "side_slope_constant": null,
+ "sediment_type": 2,
+ "sed_d50": 0.0001,
+ "sed_sg": 2.65,
+ "sed_porosity": 0.4,
+ "sed_clay": 0.3,
+ "sed_cohesion": 5000.0,
+ "sed_friction": 0.5774,
+ "adaptation_lambda": 6.0,
+ "include_adaptation_lambda": true,
+ "kd": 5.0,
+ "tauc": 2.0,
+ "headcut_model": 2,
+ "headcut_coef": 0.0049,
+ "wsl_up_initial": 11.5,
+ "wsl_down_initial": 0.1,
+ "reservoir_method": 0,
+ "res_VH": 5000000.0,
+ "res_AH": 500000.0,
+ "res_H": 18.0,
+ "res_m": 2.0,
+ "res_curve": [
+  [
+   0.0,
+   0.0
+  ],
+  [
+   0.5,
+   3855.0
+  ],
+  [
+   1.0,
+   17713.1
+  ],
+  [
+   1.5,
+   43221.1
+  ],
+  [
+   2.0,
+   81388.0
+  ],
+  [
+   2.5,
+   132972.7
+  ],
+  [
+   3.0,
+   198591.8
+  ],
+  [
+   3.5,
+   278768.9
+  ],
+  [
+   4.0,
+   373961.3
+  ],
+  [
+   4.5,
+   484576.3
+  ],
+  [
+   5.0,
+   610982.3
+  ],
+  [
+   5.5,
+   753516.1
+  ],
+  [
+   6.0,
+   912488.5
+  ],
+  [
+   6.5,
+   1088188.2
+  ],
+  [
+   7.0,
+   1280885.5
+  ],
+  [
+   7.5,
+   1490834.4
+  ],
+  [
+   8.0,
+   1718274.7
+  ],
+  [
+   8.5,
+   1963433.8
+  ],
+  [
+   9.0,
+   2226527.9
+  ],
+  [
+   9.5,
+   2507763.4
+  ],
+  [
+   10.0,
+   2807337.5
+  ],
+  [
+   10.5,
+   3125439.4
+  ],
+  [
+   11.0,
+   3462250.9
+  ],
+  [
+   11.5,
+   3817946.8
+  ],
+  [
+   12.0,
+   4192696.0
+  ],
+  [
+   12.5,
+   4586661.2
+  ],
+  [
+   13.0,
+   5000000.0
+  ]
+ ],
+ "downstream_mode": "channel",
+ "ds_channel_width": 60.0,
+ "ds_channel_slope": 0.003,
+ "ds_channel_n": 0.04,
+ "dam_type": "water",
+ "datum_base_rl": 100.0,
+ "datum_label": "m RL",
+ "datum_display": "site",
+ "ot_trigger": "pilot"
+}

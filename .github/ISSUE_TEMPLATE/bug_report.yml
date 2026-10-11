@@ -1,0 +1,62 @@
+name: Bug report
+description: Something in the dashboard does not work as expected.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Thanks for reporting. **Do not attach confidential project or client
+        data**; reproduce the problem with a worked example or made-up inputs
+        where you can. Questions about DLBreach itself belong with Prof. Wu.
+  - type: input
+    id: version
+    attributes:
+      label: Dashboard version
+      description: Shown in the header, for example "version 0.16".
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Which version
+      options:
+        - Local (launcher on my computer)
+        - Browser (GitHub Pages link)
+    validations:
+      required: true
+  - type: dropdown
+    id: page
+    attributes:
+      label: Section
+      options: [About, Project, Model setup, Single run, Sensitivity scenarios,
+                Monte Carlo, Case histories, Export, Not page-specific]
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Error details
+      description: >-
+        If the page showed "Something went wrong", open **Details** and paste
+        the text. In the browser version, also any red text from the browser
+        console (F12 → Console).
+      render: text
+  - type: input
+    id: env
+    attributes:
+      label: Computer and browser
+      placeholder: Windows 11, Python 3.13, Chrome 1xx
+  - type: textarea
+    id: files
+    attributes:
+      label: Files to reproduce it (optional)
+      description: >-
+        A project file (Project → Save project) or DLBreach input file that
+        shows the problem, if it contains nothing confidential.

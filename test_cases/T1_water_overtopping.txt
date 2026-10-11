@@ -1,0 +1,73 @@
+! DLBreach input file
+! Case: T1_water_overtop
+! Test 1: water-retaining dam, overtopping via a 0.5 m pilot channel. Dummy stage-storage.
+
+! ---- Time control ----
+Time_Step 0.5 ! in sec
+Simulation_Period 0.0, 43200.0 ! in sec
+
+! ---- Water properties ----
+Water_Density 1000.0 ! in kg/m^3
+Water_Kinematic_Viscosity 0.000001 ! m^2/s
+
+! ---- Embankment geometry ----
+Embankment_Height 12.0 ! in m
+Embankment_Crest_Width 5.0 ! in m
+Embankment_Upstream_Slope 0.3333333333333333 ! V/H
+Embankment_Downstream_Slope 0.4 ! V/H
+Embankment_Length 300.0 ! in m
+
+! ---- Breach mode ----
+Breach_Mode 1 ! 1 = overtopping, 2 = piping
+Overtopping_Mode 1 ! 1 = surface erosion, 2 = headcut, 3 = clay core
+Initial_Overtopping_Breach 0.5, 2.0 ! depth, width in m
+Breach_Location 2.0 ! 2.0 = two-sided, 1.0 = one-sided
+Hard_Bottom_Elevation 0.0 ! in m, negative below embankment base
+Breach_Manning_n 0.0264
+
+! ---- Embankment sediment ----
+Noncohesive_or_Cohesive_Sediment 1 ! 1 = noncohesive, 2 = cohesive
+Sediment_Diameter 0.001 ! in m
+Sediment_Specific_Gravity 2.65
+Sediment_Porosity 0.35
+Sediment_Clay_Content 0.05 ! fraction 0-1
+Sediment_Cohesion 0.0 ! in Pa
+Sediment_Internal_Friction 0.6249 ! tan(phi)
+Noncohesive_Sed_Adaptation_Lamda 6.0 ! 6.0 field, 3.0 laboratory
+Cohesive_Soil_Erosion_kd 10.0 ! cm^3/N-s
+Cohesive_Soil_Erosion_Tauc 0.15 ! in Pa
+
+! ---- Water levels ----
+Initial_Up&Downstream_WSL 11.8, 0.1 ! in m above embankment base
+Upstream_Reservoir                   0, 27
+                                     0.0, 0.0
+                                     0.5, 3855.0
+                                     1.0, 17713.1
+                                     1.5, 43221.1
+                                     2.0, 81388.0
+                                     2.5, 132972.7
+                                     3.0, 198591.8
+                                     3.5, 278768.9
+                                     4.0, 373961.3
+                                     4.5, 484576.3
+                                     5.0, 610982.3
+                                     5.5, 753516.1
+                                     6.0, 912488.5
+                                     6.5, 1088188.2
+                                     7.0, 1280885.5
+                                     7.5, 1490834.4
+                                     8.0, 1718274.7
+                                     8.5, 1963433.8
+                                     9.0, 2226527.9
+                                     9.5, 2507763.4
+                                     10.0, 2807337.5
+                                     10.5, 3125439.4
+                                     11.0, 3462250.9
+                                     11.5, 3817946.8
+                                     12.0, 4192696.0
+                                     12.5, 4586661.2
+                                     13.0, 5000000.0
+Downstream_Channel_Flow_Out 60.0, 0.003, 0.04 ! width, slope, Manning n
+
+
+END_PARAMETERS

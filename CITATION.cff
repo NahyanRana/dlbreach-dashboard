@@ -1,0 +1,54 @@
+cff-version: 1.2.0
+message: >-
+  If you use this dashboard, please cite DLBreach (Wu 2013, 2016) and this
+  software, as below.
+title: DLBreach Dashboard
+abstract: >-
+  An interactive Monte Carlo companion to a physically based dam breach
+  algorithm: a Streamlit interface to the DLBreach model of Prof. Weiming Wu
+  (Clarkson University), with structured input in practitioner units,
+  sensitivity scenarios, Monte Carlo ensembles, comparison with measured
+  failures of water-retaining dams, and report export.
+type: software
+authors:
+  - family-names: Rana
+    given-names: Nahyan M.
+    affiliation: Geosyntec Consultants; University of Waterloo
+    email: nahyan.rana@geosyntec.com
+    # orcid: https://orcid.org/0000-0000-0000-0000
+version: "0.16"
+license: MIT
+repository-code: https://github.com/NahyanRana/dlbreach-dashboard
+url: https://nahyanrana.github.io/dlbreach-dashboard/
+keywords:
+  - dam breach
+  - DLBreach
+  - embankment dams
+  - Monte Carlo
+  - breach outflow hydrograph
+  - dam safety
+  - Streamlit
+references:
+  - type: article
+    authors:
+      - family-names: Wu
+        given-names: Weiming
+    title: Simplified physically based model of earthen embankment breaching
+    journal: Journal of Hydraulic Engineering
+    year: 2013
+    volume: 139
+    issue: "8"
+    start: 837
+    end: 851
+    doi: 10.1061/(ASCE)HY.1943-7900.0000741
+  - type: report
+    authors:
+      - family-names: Wu
+        given-names: Weiming
+    title: >-
+      Introduction to DLBreach: A Simplified Physically-Based Dam/Levee
+      Breach Model, version 2016.4
+    institution:
+      name: Clarkson University
+    year: 2016
+    url: https://webspace.clarkson.edu/~wwu/DLBreach.html

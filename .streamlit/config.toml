@@ -1,0 +1,29 @@
+[theme]
+base = "light"
+primaryColor = "#1D5C83"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F3F6F9"
+textColor = "#17324D"
+
+[client]
+toolbarMode = "minimal"
+
+[server]
+# Serve this computer only. Without this, Streamlit also listens on the
+# network, so other machines on the same network could open the dashboard.
+address = "localhost"
+# Do not reload when files in the folder change (DLBreach and the
+# dashboard write files while running; an update mid-session is unsafe).
+fileWatcherType = "none"
+runOnSave = false
+headless = false
+
+[runner]
+# A widget change while a rerun is in progress is applied cleanly rather
+# than interrupting the script part-way.
+fastReruns = true
+
+[browser]
+# Do not send anonymous usage statistics to Streamlit.
+gatherUsageStats = false
+serverAddress = "localhost"

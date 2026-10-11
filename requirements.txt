@@ -1,0 +1,9 @@
+# DLBreach Dashboard: exact versions, for a reproducible install.
+# Supported Python: 3.11 to 3.14 (3.13 recommended). Tested on every push
+# by .github/workflows/tests.yml on Windows and Linux.
+streamlit==1.50.0
+pandas==2.3.3
+numpy==2.3.3
+matplotlib==3.10.7
+openpyxl==3.1.5
+python-docx==1.2.0

@@ -1,0 +1,283 @@
+{
+ "case_name": "S1_solid_overtop",
+ "notes": "Solid waste test 1: tailings dam, earthquake crest settlement 3 m x 30 m; pond-only stage-storage above a 21 m beach. Tailings release: Fontaine and Martin.",
+ "time_step": 0.5,
+ "sim_start": 0.0,
+ "sim_end": 43200.0,
+ "water_density": 1000.0,
+ "water_viscosity": 1e-06,
+ "emb_height": 25.0,
+ "emb_crest_width": 10.0,
+ "emb_us_slope": 0.3333333333333333,
+ "emb_ds_slope": 0.3333333333333333,
+ "emb_length": 800.0,
+ "breach_mode": 1,
+ "overtopping_mode": 1,
+ "pilot_depth": 3.0,
+ "pilot_width": 30.0,
+ "pipe_depth": 5.0,
+ "pipe_width": 0.1,
+ "pipe_head_loss": 0.05,
+ "breach_location": 2.0,
+ "hard_bottom_elev": 0.0,
+ "manning_n": 0.0235,
+ "side_slope_constant": null,
+ "sediment_type": 1,
+ "sed_d50": 0.0005,
+ "sed_sg": 2.75,
+ "sed_porosity": 0.4,
+ "sed_clay": 0.08,
+ "sed_cohesion": 0.0,
+ "sed_friction": 0.6494,
+ "adaptation_lambda": 6.0,
+ "include_adaptation_lambda": true,
+ "kd": 10.0,
+ "tauc": 0.15,
+ "headcut_model": 2,
+ "headcut_coef": 0.0049,
+ "wsl_up_initial": 22.5,
+ "wsl_down_initial": 0.1,
+ "reservoir_method": 0,
+ "res_VH": 5000000.0,
+ "res_AH": 500000.0,
+ "res_H": 18.0,
+ "res_m": 2.0,
+ "res_curve": [
+  [
+   0.0,
+   0.0
+  ],
+  [
+   0.5,
+   0.0
+  ],
+  [
+   1.0,
+   0.0
+  ],
+  [
+   1.5,
+   0.0
+  ],
+  [
+   2.0,
+   0.0
+  ],
+  [
+   2.5,
+   0.0
+  ],
+  [
+   3.0,
+   0.0
+  ],
+  [
+   3.5,
+   0.0
+  ],
+  [
+   4.0,
+   0.0
+  ],
+  [
+   4.5,
+   0.0
+  ],
+  [
+   5.0,
+   0.0
+  ],
+  [
+   5.5,
+   0.0
+  ],
+  [
+   6.0,
+   0.0
+  ],
+  [
+   6.5,
+   0.0
+  ],
+  [
+   7.0,
+   0.0
+  ],
+  [
+   7.5,
+   0.0
+  ],
+  [
+   8.0,
+   0.0
+  ],
+  [
+   8.5,
+   0.0
+  ],
+  [
+   9.0,
+   0.0
+  ],
+  [
+   9.5,
+   0.0
+  ],
+  [
+   10.0,
+   0.0
+  ],
+  [
+   10.5,
+   0.0
+  ],
+  [
+   11.0,
+   0.0
+  ],
+  [
+   11.5,
+   0.0
+  ],
+  [
+   12.0,
+   0.0
+  ],
+  [
+   12.5,
+   0.0
+  ],
+  [
+   13.0,
+   0.0
+  ],
+  [
+   13.5,
+   0.0
+  ],
+  [
+   14.0,
+   0.0
+  ],
+  [
+   14.5,
+   0.0
+  ],
+  [
+   15.0,
+   0.0
+  ],
+  [
+   15.5,
+   0.0
+  ],
+  [
+   16.0,
+   0.0
+  ],
+  [
+   16.5,
+   0.0
+  ],
+  [
+   17.0,
+   0.0
+  ],
+  [
+   17.5,
+   0.0
+  ],
+  [
+   18.0,
+   0.0
+  ],
+  [
+   18.5,
+   0.0
+  ],
+  [
+   19.0,
+   0.0
+  ],
+  [
+   19.5,
+   0.0
+  ],
+  [
+   20.0,
+   0.0
+  ],
+  [
+   20.5,
+   0.0
+  ],
+  [
+   21.0,
+   0.0
+  ],
+  [
+   21.5,
+   100475.5
+  ],
+  [
+   22.0,
+   304584.6
+  ],
+  [
+   22.5,
+   582712.0
+  ],
+  [
+   23.0,
+   923327.9
+  ],
+  [
+   23.5,
+   1319507.9
+  ],
+  [
+   24.0,
+   1766452.6
+  ],
+  [
+   24.5,
+   2260564.3
+  ],
+  [
+   25.0,
+   2799006.9
+  ],
+  [
+   25.5,
+   3379465.4
+  ],
+  [
+   26.0,
+   4000000.0
+  ]
+ ],
+ "downstream_mode": "channel",
+ "ds_channel_width": 80.0,
+ "ds_channel_slope": 0.005,
+ "ds_channel_n": 0.045,
+ "dam_type": "solid",
+ "datum_base_rl": 350.0,
+ "datum_label": "m RL (mine grid)",
+ "datum_display": "site",
+ "ot_trigger": "settlement",
+ "tl": {
+  "water_source": "run",
+  "solids_t": 20000000.0,
+  "dry_density": 1.4,
+  "sg": 2.75,
+  "sat_pct": 100.0,
+  "beach_level": 21.0,
+  "fm_cw": 50.0,
+  "cone_slope_deg": 4.0,
+  "cone_width": "bottom",
+  "cone_lmax": 0.0,
+  "ratio": 0.3,
+  "show_cone": true,
+  "method": "fm"
+ }
+}
