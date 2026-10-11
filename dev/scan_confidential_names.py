@@ -28,8 +28,8 @@ TEXT = {".py", ".md", ".json", ".txt", ".html", ".yml", ".yaml", ".cff",
 
 # The publish allowlist in .gitignore, mirrored for computers without git.
 _TOP = [".gitignore", ".gitattributes", "app.py", "dlbreach_*.py", "test_core.py",
-        "test_app_headless.py", "index.html", "requirements.txt", "*.md", "LICENSE",
-        "CITATION.cff", "Launch DLBreach Dashboard.bat", "Preview browser version.bat"]
+        "test_app_headless.py", "requirements.txt", "*.md", "LICENSE",
+        "CITATION.cff", "Launch DLBreach Dashboard.bat"]
 _SUB = ["test_cases/README.md", "test_cases/T[0-9]_water_*.json",
         "test_cases/T[0-9]_water_*.txt",
         "test_cases/solid_waste_paused/S[0-9]_solid_*.json",

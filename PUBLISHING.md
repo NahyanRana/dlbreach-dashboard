@@ -9,9 +9,12 @@ all, spread over a few sessions.
 | 1. Create the private repository and push | GitHub Desktop | 20 min |
 | 2. Check the tests pass on GitHub | Actions tab | 15 min |
 | 3. Clean install on a second machine | Another Windows PC | 20 min |
-| 4. Test the browser version | `docs/BROWSER_CHECKLIST.md` | 15 min |
-| 5. Make it public, publish the browser version | Settings | 10 min |
-| 6. Connect Zenodo, tag v1.0.0, add the DOI | zenodo.org, Releases | 20 min |
+| 3b. Test the Windows download | Actions tab, then any Windows PC | 20 min |
+| 4. Make it public | Settings | 10 min |
+| 5. Connect Zenodo, tag v1.0.0, add the DOI | zenodo.org, Releases | 20 min |
+
+The dashboard is published as a download only (it runs on the user's
+computer and runs DLBreach directly); there is no online version.
 
 **Never commit** DLBreach.exe, `Run4_v3.*`, any `.out` file or any client
 data. `.gitignore` blocks these, but check the list of changed files in
@@ -47,7 +50,7 @@ GitHub Desktop before every commit.
    `.exe`, `.out` (except `dev/fixtures/standin_T1.out`), `Run4_v3`,
    `private`, `.venv`, `.xlsx`, `.csv`, `.zip`, `.pdf` or `.docx` files, and
    no `.json` or `.txt` outside `test_cases`. GitHub Desktop should list
-   82 files (15 of them Prof. Wu's, in `test_cases/wu_2016`).
+   80 files (15 of them Prof. Wu's, in `test_cases/wu_2016`).
 5. Summary: `v0.16: repository release preparation`. **Commit to main**.
 6. **Publish repository**. Keep **Keep this code private** ticked.
    **Publish**.
@@ -75,27 +78,34 @@ On a Windows computer that has never run the dashboard:
 
 This checks the README instructions as a new user meets them.
 
-## 4. Test the browser version
+## 3b. Test the Windows download
 
-Follow `docs/BROWSER_CHECKLIST.md`. Its result decides whether step 5
-includes the browser version.
+The Windows download (the dashboard with Python and its packages already
+installed) is built and tested on GitHub's Windows machines by the
+*Windows download* workflow. On each published release it attaches itself
+to the release. Try it once before the first release:
 
-## 5. Make it public, publish the browser version
+1. On github.com, **Actions → Windows download → Run workflow → Run
+   workflow** (on branch `main`). It takes about 10 minutes; its last
+   steps test the download as a new user would meet it (no other Python
+   on the computer, the dashboard's own checks, the server answering).
+2. When it is green, open the run and download
+   **DLBreach-Dashboard-Windows** under *Artifacts*. It is a zip holding
+   `DLBreach-Dashboard-v0.16-Windows.zip`: extract that one to a new local
+   folder, double-click `Launch DLBreach Dashboard.bat`, point to
+   DLBreach.exe, load T1 and run it. Best on a computer without Python.
+3. If a step is red, send me the red text.
+
+## 4. Make it public
 
 1. **Settings → General →** scroll to *Danger Zone* → **Change visibility →
    Make public**.
-2. If the browser checklist passed:
-   - **Settings → Pages →** *Build and deployment*, Source: **GitHub Actions**.
-   - **Actions → Publish browser version → Run workflow**.
-   - After about three minutes it is live at
-     <https://nahyanrana.github.io/dlbreach-dashboard/>.
-   - Run the workflow again whenever you want the site to pick up changes.
-3. **About** panel on the repository home page (gear icon): add the
+2. **About** panel on the repository home page (gear icon): add the
    description *An interactive Monte Carlo companion to a physically based
-   dam breach algorithm*, the Pages link, and topics `dam-breach`,
-   `dlbreach`, `dam-safety`, `monte-carlo`, `streamlit`.
+   dam breach algorithm* and topics `dam-breach`, `dlbreach`, `dam-safety`,
+   `monte-carlo`, `streamlit`.
 
-## 6. Connect Zenodo, tag v1.0.0, add the DOI
+## 5. Connect Zenodo, tag v1.0.0, add the DOI
 
 Zenodo archives each GitHub release and gives it a DOI. Connect it
 **before** creating the release.
@@ -109,7 +119,8 @@ Zenodo archives each GitHub release and gives it a DOI. Connect it
    Commit and push.
 4. On GitHub: **Releases → Draft a new release** → tag `v1.0.0` (create
    new tag) → title `v1.0.0` → notes from `CHANGELOG.md` → **Publish
-   release**.
+   release**. About 10 minutes later the Windows download appears under
+   the release's *Assets* (Actions shows the *Windows download* run).
 5. Within minutes Zenodo shows the release with a DOI. Add it to
    `CITATION.cff` (`doi:`), the README citation and badge, and the
    *How to cite* text in `dlbreach_about.py`. Commit and push.
@@ -123,6 +134,5 @@ and talks.
 ## Updating later
 
 Change the files, commit and push in GitHub Desktop. The tests run on
-every push. To update the browser version, run **Publish browser version**
-again. For a new release, repeat step 6 from point 3 with the next version
+every push. For a new release, repeat step 5 from point 3 with the next version
 number; Zenodo mints a new version DOI.

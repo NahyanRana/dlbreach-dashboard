@@ -39,6 +39,21 @@ Notable changes to the DLBreach Dashboard.
 - `test_core.py` no longer leaves a `synthetic.out` file in the folder.
 
 ### Changed
+- **Windows download with nothing to install.** Each release carries
+  `DLBreach-Dashboard-<version>-Windows.zip`: the dashboard with the
+  official embeddable Python and the pinned packages already installed,
+  and its own launcher. Unzip and double-click; no Python install. It is
+  built and tested on GitHub's Windows machines (no other Python on the
+  path, the dashboard's checks, the server answering) by the new
+  *Windows download* workflow, which attaches it to each release.
+  DLBreach is not included. `test_core.py` now runs without the `dev`
+  folder, as it does inside the download.
+- **Download only.** The dashboard is published for download and run on
+  the user's computer, where it runs DLBreach directly. The browser
+  version (which could not run DLBreach, so needed output files uploaded
+  by hand) is not published: `index.html`, `Preview browser version.bat`,
+  the Pages workflow and the browser checklist are removed. The app's
+  browser mode stays in the code, tested, but unused.
 - Panel legends are drawn as the items are (filled squares for areas,
   lines for levels), with clearer labels: base width (toe to toe), length
   along crest, pilot channel depth × width, crest settlement height ×

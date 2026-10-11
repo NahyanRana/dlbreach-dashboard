@@ -113,14 +113,14 @@ echo  Keep this window open while you are using the dashboard.
 echo  To stop it, close this window or press Ctrl+C.
 echo.
 
-REM  If the server stops unexpectedly it is restarted here, and the open
-REM  browser tab reconnects by itself. Inputs are autosaved, so after a
+REM  If the server stops unexpectedly it is restarted here (a new browser
+REM  tab opens). Inputs are autosaved, so after a
 REM  page refresh they can be restored from the Project page.
 set RESTARTS=0
 :serve
 streamlit run app.py
 REM a normal stop (Ctrl+C) returns 0: do not restart then
-if not errorlevel 1 goto stopped
+if %ERRORLEVEL% EQU 0 goto stopped
 if %RESTARTS% GEQ 5 goto stopped
 set /a RESTARTS+=1
 echo.

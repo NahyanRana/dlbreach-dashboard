@@ -1,7 +1,7 @@
 # QA report — v0.16 (9 October 2026)
 
 How this release was checked, what was found, and what still has to be
-verified on a Windows computer and in a real browser.
+verified on a Windows computer.
 
 ## 1. Automated tests (all pass)
 
@@ -12,7 +12,7 @@ verified on a Windows computer and in a real browser.
 | `dev/qa_walkthrough.py` | A first-time user's path through all eight sections, pressing the real buttons | Pass |
 | `dev/qa_features.py` | 98 feature checks, below | 98 of 98 |
 | Private project benchmarks | Benchmark reproduced exactly; its input written back card for card; practitioner run log read (kept out of the repository) | Pass |
-| Confidential-name scan | The 82 files that would be published | None found |
+| Confidential-name scan | The 80 files that would be published | None found |
 
 `dev/qa_features.py` covers, for each worked example T1–T4: the input file
 round trip; Model setup in three datums; local single run, scenarios and
@@ -62,13 +62,32 @@ core names, tabbed cards, cores with other modes, duplicates), state across
 loading a new case, unique drawing ids, the clip path, and the one-sided
 width check.
 
+## 2b. Windows download
+
+The ready-to-run Windows download (`dev/build_windows_bundle.py`) is built
+and tested on GitHub's Windows machines, not here. Its test extracts the
+zip afresh, removes every other Python from the path, checks that the
+bundled Python looks only inside the download, imports every package
+(and tkinter, for the Browse button), runs `test_core.py` with the bundled
+Python and starts the dashboard until it answers. Checked here: the file
+choice, the Python path file, the version name and the launcher text
+(`test_core.py`), `test_core.py` without the `dev` folder, and every page
+run from a copy of the download's `app` folder.
+
+Not checkable on GitHub's machines, which have the Microsoft C++ runtime
+installed: whether a computer without it runs the download. The build
+copies the runtime files into the download for that case; the test on a
+computer without Python (`PUBLISHING.md` step 3b) confirms it.
+
 ## 3. Security, as checked
 
 - No client data published: allowlist `.gitignore`; confidential-name scan
   of every publishable file (needs your private list).
 - Local version serves this computer only, sends no usage statistics, keeps
   no uploads, deletes run folders.
-- Browser version: no server or shared storage; during every browser-mode
+- No online version is published (v0.16 decision): nothing runs on a
+  server, so one user's data cannot reach another's. The dormant
+  browser-mode code is still tested: during every browser-mode
   page run, the QA recorded any process start or file written in the
   dashboard folder: none.
 - Data files are written only inside the run folder; absolute paths and
@@ -79,7 +98,6 @@ width check.
 - Package versions installing on Windows (first GitHub Actions run).
 - Real Streamlit (`dev/apptest_smoke.py`, first GitHub Actions run).
 - A clean install by a new user on Windows.
-- The browser version in Chrome and Edge (`docs/BROWSER_CHECKLIST.md`).
 - Worked examples T1–T4 and Prof. Wu's cases run with DLBreach itself
   (`docs/WU_VALIDATION.md`), including a cored case edited on the Clay core
   tab.

@@ -45,8 +45,7 @@ body:
       label: Error details
       description: >-
         If the page showed "Something went wrong", open **Details** and paste
-        the text. In the browser version, also any red text from the browser
-        console (F12 → Console).
+        the text.
       render: text
   - type: input
     id: env

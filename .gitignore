@@ -13,7 +13,6 @@
 !/dlbreach_*.py
 !/test_core.py
 !/test_app_headless.py
-!/index.html
 !/requirements.txt
 !/README.md
 !/SETUP.md
@@ -25,7 +24,6 @@
 !/LICENSE
 !/CITATION.cff
 !/Launch DLBreach Dashboard.bat
-!/Preview browser version.bat
 !/dev/
 !/docs/
 !/test_cases/

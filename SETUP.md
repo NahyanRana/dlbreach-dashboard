@@ -14,9 +14,14 @@ It adds no physics of its own.
 
 ## What you need
 
-**1. Python 3.13** (3.11 to 3.14 work). From [python.org](https://www.python.org/downloads/).
-On the first screen of the installer, tick **"Add python.exe to PATH"**.
-The launcher checks the version before its first setup.
+**1. The dashboard.** The Windows download from the
+[Releases page](https://github.com/NahyanRana/dlbreach-dashboard/releases)
+(`DLBreach-Dashboard-<version>-Windows.zip`) needs nothing else: Python
+and the packages are inside it. To run from the source instead, install
+**Python 3.13** (3.11 to 3.14 work) from
+[python.org](https://www.python.org/downloads/), ticking **"Add python.exe
+to PATH"** on the installer's first screen; the source launcher checks the
+version before its first setup.
 
 **2. The DLBreach executable.** From Professor Wu's page:
 [webspace.clarkson.edu/~wwu/DLBreach.html](https://webspace.clarkson.edu/~wwu/DLBreach.html).
@@ -26,15 +31,19 @@ It is not distributed with this dashboard.
 
 ## Running it
 
-1. Download the repository (**Code → Download ZIP** on GitHub, or the
-   latest release) and extract it somewhere local — **not** inside OneDrive or another
-   synced folder. Your user folder works, e.g. `C:\Users\<you>\DLBreach_Dashboard`.
-2. Double-click **Launch DLBreach Dashboard.bat**. The first run sets
-   everything up and takes a couple of minutes; later runs start in seconds.
+1. Extract the Windows download (or the source zip, **Code → Download ZIP**)
+   somewhere local — **not** inside OneDrive or another synced folder. Your
+   user folder works, e.g. `C:\Users\<you>\DLBreach-Dashboard`.
+2. Double-click **Launch DLBreach Dashboard.bat**. The Windows download
+   starts in seconds. From the source, the first run sets up an environment
+   and takes a couple of minutes; later runs start in seconds.
    If Windows shows "Windows protected your PC", click **More info → Run anyway**.
 3. A browser tab opens. Leave the black window open while you work.
 
-**Updating from an earlier version:** replace every file in the folder,
+**Updating the Windows download:** extract the new release to a new
+folder; save your project first and open it there.
+
+**Updating from the source:** replace every file in the folder,
 including the hidden `.streamlit` folder and `test_cases`, but keep `.venv`.
 Then start it with the launcher as usual: from v0.8 it checks for missing
 packages and installs them, so no manual `pip install` is needed.
@@ -113,7 +122,6 @@ the Project page. The solid waste cases S1 and S2 are in
 | `dlbreach_report.py` | PDF report appendix |
 | `dlbreach_help.py` | Help text for every field |
 | `dlbreach_templates.py` | Templates for every file the dashboard reads |
-| `index.html` | Browser version entry point (see PUBLISHING.md) |
 | `dlbreach_data.py` | Case-history data and citations |
 | `dlbreach_about.py` | About page text and disclaimer |
 | `test_core.py` | Checks the calculations; also runs the private project benchmarks when `test_private_benchmarks.py` is present |

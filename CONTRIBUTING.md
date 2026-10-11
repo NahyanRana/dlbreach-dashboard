@@ -9,7 +9,7 @@ Open an [issue](https://github.com/NahyanRana/dlbreach-dashboard/issues)
 and pick the form that fits (bug report or feature request). For a bug,
 the most useful things are:
 
-- the version shown in the header, and local or browser version;
+- the version shown in the header;
 - what you did, what you expected and what happened;
 - the text under **Details** if the page showed *Something went wrong*;
 - the project file (`.json`, from **Project → Save project**) or DLBreach

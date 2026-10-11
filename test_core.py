@@ -110,7 +110,10 @@ else:
 # not appear in any file that would be published.
 import sys as _sys
 _sys.path.insert(0, "dev")
-from scan_confidential_names import scan as _scan
+try:
+    from scan_confidential_names import scan as _scan
+except ImportError:                           # inside the download: no dev folder
+    _scan = lambda: None
 _res = _scan()
 if _res is None:
     _SKIPPED.append("confidential-name scan (dev/private_terms.txt not present)")
@@ -402,6 +405,32 @@ if _wu:
 else:
     _SKIPPED.append("Wu validation inputs (test_cases/wu_2016 not present)")
     print("=== loaded files written back card for card: ok ===")
+
+# ---- 13c. the Windows download (dev/build_windows_bundle.py) ------------
+# What can be checked without Windows; the build itself is tested on
+# GitHub's Windows machines by .github/workflows/windows-download.yml.
+import importlib.util as _ilu
+_bwb_path = _P(__file__).resolve().parent / "dev" / "build_windows_bundle.py"
+if not _bwb_path.is_file():                   # inside the download: no dev folder
+    _SKIPPED.append("Windows download builder (dev folder not present)")
+else:
+  _spec = _ilu.spec_from_file_location("_bwb", _bwb_path)
+  _bwb = _ilu.module_from_spec(_spec); _spec.loader.exec_module(_bwb)
+  _af = _bwb.app_files(["app.py", "dlbreach_io.py", "dev/standin_dlbreach.py", ".github/workflows/tests.yml",
+                        "test_core.py", "test_app_headless.py", "Launch DLBreach Dashboard.bat",
+                        "PUBLISHING.md", "README.md", ".streamlit/config.toml",
+                        "test_cases/wu_2016/Teton_cards.txt", ".gitignore"])
+  assert _af == [".streamlit/config.toml", "README.md", "app.py", "dlbreach_io.py",
+                 "test_cases/wu_2016/Teton_cards.txt", "test_core.py"], _af
+  _pth = _bwb.pth_text("313").splitlines()
+  assert _pth[0] == "python313.zip" and "import site" in _pth and r"..\app" in _pth
+  assert _bwb.version_name('VERSION_SHORT = "version 0.16, development build"', None) == "v0.16"
+  assert _bwb.version_name("", "v1.0.0") == "v1.0.0"
+  assert _bwb.version_name('VERSION_SHORT = "version 0.16, x"', "main") == "v0.16"
+  assert r'"%~dp0python\python.exe" -m streamlit run app.py' in _bwb.LAUNCHER
+  assert "DLBreach.exe" in _bwb.readme_first("v1.0.0", "3.13.7")
+  assert "not included" in _bwb.readme_first("v1.0.0", "3.13.7")
+  print("=== Windows download builder (file choice, paths, launcher): ok ===")
 
 # ---- 14. case-history data ---------------------------------------------
 import dlbreach_data as _D

@@ -554,7 +554,7 @@ def security_checks():
                     "dlbreach_io.py", ".streamlit/config.toml", "dev/qa_features.py",
                     "docs/images/model-setup.png", "README.md",
                     "dev/scan_confidential_names.py", "dev/standin_dlbreach.py",
-                    "docs/QA_REPORT.md", "docs/BROWSER_CHECKLIST.md",
+                    "docs/QA_REPORT.md",
                     "test_cases/wu_2016/Teton_cards.txt",
                     "test_cases/wu_2016/Sutter_cards_BasinVolume.txt",
                     "test_cases/wu_2016/Mecox_WaveDS.txt"]
@@ -579,12 +579,6 @@ def security_checks():
         assert not BROWSER_VIOLATIONS, BROWSER_VIOLATIONS[:5]
         return "checked during every browser-mode page run above"
 
-    @check(area, "browser page loads code only from jsDelivr, pinned")
-    def _():
-        html = (ROOT / "index.html").read_text()
-        urls = re.findall(r"https?://[^\s\"'`)]+", html)
-        assert urls and all(u.startswith("https://cdn.jsdelivr.net/npm/@stlite/browser@0.")
-                            for u in urls), urls
 
 def loading_checks():
     """Loading DLBreach input files: name and notes, card-for-card fidelity,

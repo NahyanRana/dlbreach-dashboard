@@ -1,0 +1,49 @@
+name: Windows download
+
+# Builds the ready-to-run Windows download (the dashboard with Python and
+# its packages already installed; DLBreach not included), tests it as a
+# new user would meet it, and:
+#   - on a published release, attaches it to that release;
+#   - when run by hand (Actions > Windows download > Run workflow), keeps it
+#     as a downloadable artifact for testing, for 14 days.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write          # to attach the zip to the release
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      # the Python version the download carries
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Build the download
+        run: python dev/build_windows_bundle.py
+
+      - name: Test it as a new user would meet it
+        run: python dev/build_windows_bundle.py --test
+
+      - name: Keep it for testing
+        uses: actions/upload-artifact@v4
+        with:
+          name: DLBreach-Dashboard-Windows
+          path: dist/DLBreach-Dashboard-*-Windows.zip
+          retention-days: 14
+          compression-level: 0
+
+      - name: Attach it to the release
+        if: github.event_name == 'release'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ github.event.release.tag_name }}" dist/DLBreach-Dashboard-*-Windows.zip --clobber

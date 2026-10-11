@@ -60,18 +60,13 @@ Eight sections, worked through in order from a contents panel:
 *The screenshots are illustrative mock-ups of the layout. Their numbers
 are not DLBreach results.*
 
-## Two ways to use it
+## How it runs
 
-| | **Local version** (recommended) | **Browser version** |
-|---|---|---|
-| Install | Python and the launcher (below) | None: open the link |
-| Runs DLBreach | Yes, directly, including parallel Monte Carlo | No. Each run page prepares input files (one, or a zip with `run_all.bat`); you run them with DLBreach and upload the `.out` files back |
-| Everything else | Yes | Yes: setup, drawings, results, scenarios, Monte Carlo statistics, case histories, export |
-| Where your data goes | Stays on your computer | Stays in your browser tab; nothing is uploaded to a server |
-
-The browser version will be published at
-<https://nahyanrana.github.io/dlbreach-dashboard/> (Chrome, Edge or Safari;
-the first load takes about a minute).
+The dashboard runs on your own Windows computer. You download it, double-
+click the launcher, and it opens in your web browser as a local page. It
+runs DLBreach directly, including Monte Carlo runs in parallel, and your
+inputs and results stay on your computer. There is no online version:
+a web page cannot start DLBreach on a visitor's computer.
 
 ## Obtaining DLBreach
 
@@ -83,23 +78,35 @@ output file specifications:
 
 ## Install and start (Windows)
 
-![Getting started on Windows in five steps](docs/images/quick-start.png)
+![Getting started on Windows in four steps](docs/images/quick-start.png)
 
-1. **Install Python 3.13** from <https://www.python.org/downloads/>. On the
-   installer's first screen, tick **Add python.exe to PATH**.
-   (Python 3.11 to 3.14 work; the launcher checks.)
+**Windows download (recommended): nothing to install.**
+
+1. **Download the dashboard.** On the
+   [Releases page](https://github.com/NahyanRana/dlbreach-dashboard/releases),
+   download `DLBreach-Dashboard-<version>-Windows.zip` from the latest
+   release. It holds the dashboard with Python and every package it uses,
+   already installed (about 100 MB).
 2. **Get DLBreach** from Prof. Wu's page (above).
-3. **Download this repository.** On GitHub, **Code → Download ZIP** (or
-   the latest release). Extract it to a local folder, **not** OneDrive or
-   another synced folder, for example `C:\Users\<you>\dlbreach-dashboard`.
-4. **Double-click `Launch DLBreach Dashboard.bat`.** The first run creates
-   an isolated Python environment in the folder and installs the packages
-   (about two minutes); later runs start in seconds. If Windows shows
-   *Windows protected your PC*, click **More info → Run anyway**. Keep the
-   black window open while you work.
-5. **In the browser tab that opens**, go to **Project**, point to
+3. **Extract, then double-click.** Right-click the zip, **Extract All**, to
+   a local folder, **not** OneDrive or another synced folder, for example
+   `C:\Users\<you>\DLBreach-Dashboard`. Double-click
+   **`Launch DLBreach Dashboard.bat`** in it. If Windows shows *Windows
+   protected your PC*, click **More info → Run anyway**. Keep the black
+   window open while you work.
+4. **In the browser tab that opens**, go to **Project**, point to
    `DLBreach.exe` (the path is remembered), and load worked example **T1**.
    Then follow the contents panel from top to bottom.
+
+To update, extract the new release to a new folder. Save your project
+first (**Project → Save project**) and open it in the new version.
+
+**From the source, with your own Python.** Install Python 3.13 from
+<https://www.python.org/downloads/> (tick **Add python.exe to PATH**;
+3.11 to 3.14 work). On GitHub, **Code → Download ZIP**, extract it to a
+local folder and double-click `Launch DLBreach Dashboard.bat`: the first
+run creates an isolated environment in the folder and installs the
+packages (about two minutes); later runs start in seconds.
 
 Detailed instructions, updating from an earlier version, and a table of
 the files are in [SETUP.md](SETUP.md).
@@ -156,13 +163,8 @@ colour and style.
 - **Local version.** Runs entirely on your computer. The dashboard serves
   only `localhost` (not your network), sends no usage statistics, and
   uploads nothing. Inputs are autosaved to a file in the dashboard folder.
-- **Browser version.** GitHub Pages serves static files only; there is no
-  server running the dashboard. Python runs inside your browser tab, and
-  files you "upload" go into that tab, not to any server, and nothing is
-  kept after the tab closes. One visitor cannot see another's data: there
-  is no shared server or storage. The page loads its runtime (stlite,
-  which fixes the Pyodide and Streamlit versions, and two pinned Python
-  packages) and fonts from public sources (jsDelivr, PyPI, Google Fonts).
+- **No hosted service.** Nothing is run on a server, so one user's data
+  can never reach another's.
 - **DLBreach** is obtained from Prof. Wu and run on your own computer.
 - Do not post confidential project data in issues.
 
@@ -176,9 +178,9 @@ checks are kept out of this repository.
 | Test | What it checks |
 |---|---|
 | `test_core.py` | Input cards, output parsing, sampling and statistics, units and porosity, the Fontaine and Martin (2015) worked example, case-history counts against Froehlich (2016a) and Xu and Zhang (2009), the Wu (2016) Eq. 3.5 flow-depth rule. |
-| `test_app_headless.py` | Every page in local and browser modes, scenario and Monte Carlo results, PDF and Word export, without a browser. |
+| `test_app_headless.py` | Every page, scenario and Monte Carlo results, PDF and Word export, without a browser. |
 | `dev/apptest_smoke.py` | Every page in real Streamlit, failing on any error shown on screen. |
-| `dev/qa_features.py` | 98 feature checks: every page's actions for all four worked examples, in the local version and the browser version (download inputs, run, upload outputs), project and template files, uploads, autosave, loading input files card for card (with Prof. Wu's validation inputs), the clay core tab and the drawings, and the security settings. |
+| `dev/qa_features.py` | 98 feature checks: every page's actions for all four worked examples, including run packages (download inputs, run, upload outputs), project and template files, uploads, autosave, loading input files card for card (with Prof. Wu's validation inputs), the clay core tab and the drawings, and the security settings. |
 | `dev/qa_walkthrough.py` | A first-time user's path through all eight sections, pressing the real buttons, against a stand-in executable. |
 
 Prof. Wu's own validation cases can be loaded and checked against his
