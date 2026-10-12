@@ -10,8 +10,8 @@ SUBTITLE = "An interactive Monte Carlo companion to a physically based dam breac
 AUTHOR = "Dr. Nahyan M. Rana"
 PREPARED_BY = ("Prepared by Dr. Nahyan M. Rana, Geosyntec Consultants and "
                "University of Waterloo")
-VERSION = "Version 1.0.0"
-VERSION_SHORT = "version 1.0.0"
+VERSION = "Version 1.0.1"
+VERSION_SHORT = "version 1.0.1"
 ALGORITHM_BY = "Algorithm by Prof. Weiming Wu, Clarkson University"
 CONTACT_EMAIL = "nahyan.rana@geosyntec.com"
 CONTACT_HTML = (
@@ -90,7 +90,7 @@ CITATIONS_HTML = (
     "<p>Wu, W. (2016). Introduction to DLBreach — A Simplified "
     "Physically-Based Dam/Levee Breach Model, version 2016.4. Technical "
     "Report, Clarkson University.</p>"
-    "<p>Rana, N.M. (2026). DLBreach Dashboard (version 1.0.0) [software]. "
+    "<p>Rana, N.M. (2026). DLBreach Dashboard (version 1.0.1) [software]. "
     "Zenodo. https://doi.org/10.5281/zenodo.23307440</p>"
     "<p style='color:#5E6B77'>Related talk (abstract submitted): Rana, N.M. "
     "(2027). DLBreach Dashboard: An Open-Source, Interactive, Monte Carlo Interface to a Physical-Based Dam Breach Algorithm. Lightning talk, International Commission on Large "

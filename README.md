@@ -16,10 +16,10 @@ Every simulation is run by the published DLBreach executable. The
 dashboard writes the input file, runs the model and presents its output.
 It adds no physics to the model.
 
-<!-- Screenshots are mock-ups of the v1.0.0 layout. -->
+<!-- Screenshots are mock-ups of the v1.0 layout. -->
 ![Model setup page: contents panel, status strip and live cross-section](docs/images/model-setup.png)
 
-> **Scope (v1.0.0).** Water-retaining embankment dams.
+> **Scope (v1.0.1).** Water-retaining embankment dams.
 > Solid waste dams (tailings, coal ash) are in development and switched off
 > in this build; see [TAILINGS_TODO.md](TAILINGS_TODO.md).
 
@@ -212,12 +212,13 @@ Please cite the model, and the dashboard where it was used:
 - Wu, W. (2016). *Introduction to DLBreach: A Simplified Physically-Based
   Dam/Levee Breach Model*, version 2016.4. Technical report, Clarkson
   University.
-- Rana, N.M. (2026). *DLBreach Dashboard* (version 1.0.0) [software].
+- Rana, N.M. (2026). *DLBreach Dashboard* (version 1.0.1) [software].
   Zenodo. <https://doi.org/10.5281/zenodo.23307440>
 
 GitHub's **Cite this repository** button (from [CITATION.cff](CITATION.cff))
 gives the dashboard reference in APA and BibTeX. The DOI above always
-resolves to the latest version; version 1.0.0 itself is
+resolves to the latest version. Each release also has its own DOI, shown
+on its Zenodo record; version 1.0.0 is
 [10.5281/zenodo.23307441](https://doi.org/10.5281/zenodo.23307441).
 
 Related talk: Rana, N.M. (2027). *DLBreach Dashboard: An Open-Source, Interactive, Monte Carlo Interface to a Physical-Based Dam Breach Algorithm*. Lightning talk, International

@@ -2,7 +2,10 @@
 
 Notable changes to the DLBreach Dashboard.
 
-## [Unreleased]
+## [1.0.1] — citation and documentation (11 October 2026)
+
+No change to the dashboard's behaviour.
+
 - Zenodo DOI in `CITATION.cff`, the README (with a DOI badge) and the
   About page: 10.5281/zenodo.23307440 for all versions,
   10.5281/zenodo.23307441 for version 1.0.0.

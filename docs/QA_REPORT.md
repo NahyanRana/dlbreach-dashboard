@@ -1,4 +1,7 @@
-# QA report — v1.0.0 (11 October 2026)
+# QA report — v1.0.1 (11 October 2026)
+
+v1.0.1 changes documentation and citation only (see CHANGELOG); the code
+and its testing are those of v1.0.0.
 
 v1.0.0 is v0.16 with the Windows download, local-only publication and the
 release citation; the testing below applies to it.
