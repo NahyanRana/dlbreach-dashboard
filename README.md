@@ -15,10 +15,10 @@ Every simulation is run by the published DLBreach executable. The
 dashboard writes the input file, runs the model and presents its output.
 It adds no physics to the model.
 
-<!-- Screenshots are mock-ups of the v0.16 layout; replace with live captures before v1.0.0. -->
+<!-- Screenshots are mock-ups of the v1.0.0 layout. -->
 ![Model setup page: contents panel, status strip and live cross-section](docs/images/model-setup.png)
 
-> **Scope (v0.16, development build).** Water-retaining embankment dams.
+> **Scope (v1.0.0).** Water-retaining embankment dams.
 > Solid waste dams (tailings, coal ash) are in development and switched off
 > in this build; see [TAILINGS_TODO.md](TAILINGS_TODO.md).
 
@@ -203,12 +203,15 @@ Please cite the model, and the dashboard where it was used:
 - Wu, W. (2016). *Introduction to DLBreach: A Simplified Physically-Based
   Dam/Levee Breach Model*, version 2016.4. Technical report, Clarkson
   University.
-- Rana, N.M. (2026). *DLBreach Dashboard* (version 0.16) [software].
+- Rana, N.M. (2026). *DLBreach Dashboard* (version 1.0.0) [software].
   <https://github.com/NahyanRana/dlbreach-dashboard>
 
 GitHub's **Cite this repository** button (from [CITATION.cff](CITATION.cff))
-gives the dashboard reference in APA and BibTeX. A DOI will be added with
-the first release.
+gives the dashboard reference in APA and BibTeX. Its DOI is added once the
+release is archived on Zenodo.
+
+A paper on the dashboard is in preparation for the International
+Commission on Large Dams (ICOLD) Conference, Daejeon, South Korea, May 2027.
 
 ## Licence and attribution
 

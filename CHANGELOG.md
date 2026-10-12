@@ -2,6 +2,26 @@
 
 Notable changes to the DLBreach Dashboard.
 
+## [1.0.0] — first public release (11 October 2026)
+
+The first public release, for download and use on the user's own Windows
+computer. It brings together the work of the development builds below:
+structured DLBreach input in practitioner units with a live
+cross-section (including clay cores), card-for-card loading of existing
+input files, single runs, sensitivity scenarios and Monte Carlo ensembles
+run in parallel, comparison with measured failures of water-retaining
+dams, and PDF or Word report export.
+
+- **Windows download** attached to the release: the dashboard with Python
+  and its packages already installed. Unzip and double-click; DLBreach is
+  obtained from Prof. Wu's page.
+- **Citation:** software citation (2026, version 1.0.0) with ORCID in
+  `CITATION.cff`, the README and the About page; the planned ICOLD 2027
+  paper is listed separately, as in preparation. The Zenodo DOI follows
+  the release.
+- Tested on every push on Windows and Linux, Python 3.11 to 3.14; the
+  Windows download is built and tested on Windows for every release.
+
 ## [0.16] — clay core inputs and clearer drawings (October 2026)
 
 ### Added

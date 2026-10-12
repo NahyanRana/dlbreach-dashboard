@@ -1,4 +1,7 @@
-# QA report — v0.16 (9 October 2026)
+# QA report — v1.0.0 (11 October 2026)
+
+v1.0.0 is v0.16 with the Windows download, local-only publication and the
+release citation; the testing below applies to it.
 
 How this release was checked, what was found, and what still has to be
 verified on a Windows computer.
@@ -93,11 +96,19 @@ computer without Python (`PUBLISHING.md` step 3b) confirms it.
 - Data files are written only inside the run folder; absolute paths and
   `..` are refused.
 
-## 4. Not yet verified (Stage 4)
+## 4. Verified at release (11 October 2026)
 
-- Package versions installing on Windows (first GitHub Actions run).
-- Real Streamlit (`dev/apptest_smoke.py`, first GitHub Actions run).
-- A clean install by a new user on Windows.
-- Worked examples T1–T4 and Prof. Wu's cases run with DLBreach itself
-  (`docs/WU_VALIDATION.md`), including a cored case edited on the Clay core
-  tab.
+- Package versions install, and every suite passes, on GitHub's Windows and
+  Linux machines with Python 3.11 to 3.14, including every page in real
+  Streamlit (`dev/apptest_smoke.py`).
+- A clean install from the GitHub source zip, by the owner: setup, T1, a
+  Monte Carlo run and PDF export with DLBreach itself.
+- The Windows download, built and tested on GitHub's Windows machine, then
+  run on a computer without Python: the Browse button, T1 with DLBreach,
+  20 Monte Carlo realisations and PDF export.
+
+## 5. Still to do
+
+- Prof. Wu's validation cases run with DLBreach directly and through the
+  dashboard, compared (`docs/WU_VALIDATION.md`), including a cored case
+  edited on the Clay core tab.

@@ -15,8 +15,9 @@ authors:
     given-names: Nahyan M.
     affiliation: Geosyntec Consultants; University of Waterloo
     email: nahyan.rana@geosyntec.com
-    # orcid: https://orcid.org/0000-0000-0000-0000
-version: "0.16"
+    orcid: https://orcid.org/0000-0002-7525-8431
+version: "1.0.0"
+date-released: "2026-10-11"
 license: MIT
 repository-code: https://github.com/NahyanRana/dlbreach-dashboard
 url: https://github.com/NahyanRana/dlbreach-dashboard

@@ -91,7 +91,7 @@ to the release. Try it once before the first release:
    on the computer, the dashboard's own checks, the server answering).
 2. When it is green, open the run and download
    **DLBreach-Dashboard-Windows** under *Artifacts*. It is a zip holding
-   `DLBreach-Dashboard-v0.16-Windows.zip`: extract that one to a new local
+   `DLBreach-Dashboard-<version>-Windows.zip`: extract that one to a new local
    folder, double-click `Launch DLBreach Dashboard.bat`, point to
    DLBreach.exe, load T1 and run it. Best on a computer without Python.
 3. If a step is red, send me the red text.
