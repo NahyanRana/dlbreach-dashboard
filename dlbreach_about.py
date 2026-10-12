@@ -50,7 +50,10 @@ Every simulation is executed by the published DLBreach executable; the
 dashboard writes the input, runs it and presents the output, and adds no
 physics to the model. Anything it derives from the output, such as the
 flow depth drawn in the breach or the eroded embankment volume, is
-identified where it is shown. Professor Wu was consulted during
+identified where it is shown. The dashboard was developed with an AI
+coding assistant, under the author's direction and engineering review,
+and each release is checked by automated tests, independent review and
+benchmark cases. Professor Wu was consulted during
 development; the dashboard is independent of, and not endorsed by, him or
 Clarkson University.
 
@@ -88,10 +91,10 @@ CITATIONS_HTML = (
     "Physically-Based Dam/Levee Breach Model, version 2016.4. Technical "
     "Report, Clarkson University.</p>"
     "<p>Rana, N.M. (2026). DLBreach Dashboard (version 1.0.0) [software]. "
-    "https://github.com/NahyanRana/dlbreach-dashboard</p>"
-    "<p style='color:#5E6B77'>Related paper, in preparation: Rana, N.M. "
-    "(2027). International Commission on Large Dams (ICOLD) Conference, "
-    "Daejeon, South Korea, May 2027.</p>")
+    "Zenodo. https://doi.org/10.5281/zenodo.23307440</p>"
+    "<p style='color:#5E6B77'>Related talk (abstract submitted): Rana, N.M. "
+    "(2027). DLBreach Dashboard: An Open-Source, Interactive, Monte Carlo Interface to a Physical-Based Dam Breach Algorithm. Lightning talk, International Commission on Large "
+    "Dams (ICOLD) Conference, Daejeon, South Korea, 21–27 May 2027.</p>")
 
 GETTING_STARTED = """
 ### Getting started

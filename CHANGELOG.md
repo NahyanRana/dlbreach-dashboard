@@ -2,6 +2,18 @@
 
 Notable changes to the DLBreach Dashboard.
 
+## [Unreleased]
+- Zenodo DOI in `CITATION.cff`, the README (with a DOI badge) and the
+  About page: 10.5281/zenodo.23307440 for all versions,
+  10.5281/zenodo.23307441 for version 1.0.0.
+- README *How it was built*: developed with an AI coding assistant, under
+  the author's direction and engineering review, and how each release is
+  checked.
+- The related ICOLD 2027 lightning talk cited with its title, in the
+  README and on the About page.
+- Wu validation results recorded: Teton and Banqiao matched direct
+  DLBreach runs (`docs/WU_VALIDATION.md`, `docs/QA_REPORT.md`).
+
 ## [1.0.0] — first public release (11 October 2026)
 
 The first public release, for download and use on the user's own Windows

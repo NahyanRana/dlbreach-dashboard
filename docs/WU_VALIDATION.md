@@ -50,6 +50,15 @@ For each case:
    it as a reference, not a pass mark; step 3 is the test of the
    dashboard.
 
+### Results so far
+
+| Case | Dashboard against a direct DLBreach run | Checked |
+|---|---|---|
+| `Teton_cards` | Matched | Owner, October 2026 |
+| `Banqiao_cards` | Matched | Owner, October 2026 |
+
+The other nine cases are still to be run.
+
 ## 3. Values reported by Wu (2016)
 
 From the technical report's Tables 6.2, 6.4, 6.7 and 6.9 and Sections 7.1

@@ -4,6 +4,7 @@
 
 [![Tests](https://github.com/NahyanRana/dlbreach-dashboard/actions/workflows/tests.yml/badge.svg)](https://github.com/NahyanRana/dlbreach-dashboard/actions/workflows/tests.yml)
 [![Licence: MIT](https://img.shields.io/badge/licence-MIT-1D5C83.svg)](LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23307440.svg)](https://doi.org/10.5281/zenodo.23307440)
 
 A Streamlit interface to **DLBreach**, the dam and levee breach model
 developed by Prof. Weiming Wu, Clarkson University (Wu 2013, 2016). It
@@ -180,11 +181,19 @@ checks are kept out of this repository.
 | `test_core.py` | Input cards, output parsing, sampling and statistics, units and porosity, the Fontaine and Martin (2015) worked example, case-history counts against Froehlich (2016a) and Xu and Zhang (2009), the Wu (2016) Eq. 3.5 flow-depth rule. |
 | `test_app_headless.py` | Every page, scenario and Monte Carlo results, PDF and Word export, without a browser. |
 | `dev/apptest_smoke.py` | Every page in real Streamlit, failing on any error shown on screen. |
-| `dev/qa_features.py` | 98 feature checks: every page's actions for all four worked examples, including run packages (download inputs, run, upload outputs), project and template files, uploads, autosave, loading input files card for card (with Prof. Wu's validation inputs), the clay core tab and the drawings, and the security settings. |
+| `dev/qa_features.py` | 97 feature checks: every page's actions for all four worked examples, including run packages (download inputs, run, upload outputs), project and template files, uploads, autosave, loading input files card for card (with Prof. Wu's validation inputs), the clay core tab and the drawings, and the security settings. |
 | `dev/qa_walkthrough.py` | A first-time user's path through all eight sections, pressing the real buttons, against a stand-in executable. |
 
 Prof. Wu's own validation cases can be loaded and checked against his
-report: see [docs/WU_VALIDATION.md](docs/WU_VALIDATION.md).
+report: see [docs/WU_VALIDATION.md](docs/WU_VALIDATION.md). For the Teton and
+Banqiao cases, runs through the dashboard matched direct DLBreach runs
+(owner's check, October 2026).
+
+**How it was built.** The dashboard was developed with an AI coding
+assistant, under the author's direction and engineering review. Every
+release is checked by the automated tests above, independent code
+review, the project benchmark and Prof. Wu's validation cases, and the
+results remain DLBreach's: the dashboard adds no physics of its own.
 
 The QA record, including an independent review, is in
 [docs/QA_REPORT.md](docs/QA_REPORT.md). GitHub Actions runs the tests on every push, Python 3.11 to 3.14: the first
@@ -204,14 +213,16 @@ Please cite the model, and the dashboard where it was used:
   Dam/Levee Breach Model*, version 2016.4. Technical report, Clarkson
   University.
 - Rana, N.M. (2026). *DLBreach Dashboard* (version 1.0.0) [software].
-  <https://github.com/NahyanRana/dlbreach-dashboard>
+  Zenodo. <https://doi.org/10.5281/zenodo.23307440>
 
 GitHub's **Cite this repository** button (from [CITATION.cff](CITATION.cff))
-gives the dashboard reference in APA and BibTeX. Its DOI is added once the
-release is archived on Zenodo.
+gives the dashboard reference in APA and BibTeX. The DOI above always
+resolves to the latest version; version 1.0.0 itself is
+[10.5281/zenodo.23307441](https://doi.org/10.5281/zenodo.23307441).
 
-A paper on the dashboard is in preparation for the International
-Commission on Large Dams (ICOLD) Conference, Daejeon, South Korea, May 2027.
+Related talk: Rana, N.M. (2027). *DLBreach Dashboard: An Open-Source, Interactive, Monte Carlo Interface to a Physical-Based Dam Breach Algorithm*. Lightning talk, International
+Commission on Large Dams (ICOLD) Conference, Daejeon, South Korea,
+21–27 May 2027 (abstract submitted).
 
 ## Licence and attribution
 

@@ -107,8 +107,11 @@ computer without Python (`PUBLISHING.md` step 3b) confirms it.
   run on a computer without Python: the Browse button, T1 with DLBreach,
   20 Monte Carlo realisations and PDF export.
 
+- Prof. Wu's validation cases Teton (one-sided piping) and Banqiao (clay
+  core, overtopping): runs through the dashboard matched direct DLBreach
+  runs (owner's check; `docs/WU_VALIDATION.md`).
+
 ## 5. Still to do
 
-- Prof. Wu's validation cases run with DLBreach directly and through the
-  dashboard, compared (`docs/WU_VALIDATION.md`), including a cored case
-  edited on the Clay core tab.
+- The other nine Wu validation cases, and a cored case edited on the Clay
+  core tab, run with DLBreach directly and through the dashboard.
