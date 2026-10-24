@@ -2,6 +2,23 @@
 
 Notable changes to the DLBreach Dashboard.
 
+## [1.0.3] — scenario and Monte Carlo runs on the case-history charts (24 October 2026)
+
+- **Case histories:** switches to add the scenario runs and Monte Carlo
+  realisations, alongside the single run, to the four existing charts.
+  Realisations are small light points, one colour per ensemble; scenario
+  runs are green markers; hover names the run. Each run is placed by its
+  own inputs and results. No charts are added.
+- Each scenario run and realisation now stores the water volume above the
+  breach invert and the formation time, from its full output, so it can be
+  placed on the charts. Results from earlier versions lack them; the page
+  names any it leaves out.
+- The single run's diamond is drawn translucent on screen and hollow in the
+  report, so a run at the same place stays visible.
+- The PDF and Word appendix use the same choice, and the caption says what
+  each marker is and that the spread of an ensemble reflects input
+  uncertainty for one dam, not the differences between dams.
+
 ## [1.0.2] — foundational methodology (24 October 2026)
 
 No change to the dashboard's behaviour.

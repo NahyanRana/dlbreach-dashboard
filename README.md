@@ -19,7 +19,7 @@ It adds no physics to the model.
 <!-- Screenshots are mock-ups of the v1.0 layout. -->
 ![Model setup page: contents panel, status strip and live cross-section](docs/images/model-setup.png)
 
-> **Scope (v1.0.2).** Water-retaining embankment dams.
+> **Scope (v1.0.3).** Water-retaining embankment dams.
 > Solid waste dams (tailings, coal ash) are in development and switched off
 > in this build; see [TAILINGS_TODO.md](TAILINGS_TODO.md).
 
@@ -52,7 +52,7 @@ Eight sections, worked through in order from a contents panel:
 | **Single run** | Outflow hydrograph, breach widths and levels through time, the breach seen from downstream between its abutments (step through or play; a one-sided breach is drawn against the abutment that does not erode), downloads for inundation modelling. |
 | **Sensitivity scenarios** | One column per run, run all, compare outflow, widths, depth and pond level. |
 | **Monte Carlo** | Ensembles around any run: summary, P05–P95 envelopes through time for outflow and breach geometry, input-against-result charts, any single realisation to inspect and download. |
-| **Case histories** | Your result among measured failures of water-retaining dams (Froehlich 2016a; Xu and Zhang 2009). |
+| **Case histories** | Your single run, and optionally your scenario runs and Monte Carlo realisations, among measured failures of water-retaining dams (Froehlich 2016a; Xu and Zhang 2009). |
 | **Export** | Report appendix in PDF or Word with the sections you choose. |
 
 ![Single run: result tiles, hydrograph, breach widths and levels](docs/images/single-run.png)
@@ -237,7 +237,7 @@ checks are kept out of this repository.
 | `test_core.py` | Input cards, output parsing, sampling and statistics, units and porosity, the Fontaine and Martin (2015) worked example, case-history counts against Froehlich (2016a) and Xu and Zhang (2009), the Wu (2016) Eq. 3.5 flow-depth rule. |
 | `test_app_headless.py` | Every page, scenario and Monte Carlo results, PDF and Word export, without a browser. |
 | `dev/apptest_smoke.py` | Every page in real Streamlit, failing on any error shown on screen. |
-| `dev/qa_features.py` | 97 feature checks: every page's actions for all four worked examples, including run packages (download inputs, run, upload outputs), project and template files, uploads, autosave, loading input files card for card (with Prof. Wu's validation inputs), the clay core tab and the drawings, and the security settings. |
+| `dev/qa_features.py` | 121 feature checks: every page's actions for all four worked examples, including run packages (download inputs, run, upload outputs), project and template files, uploads, autosave, loading input files card for card (with Prof. Wu's validation inputs), the clay core tab and the drawings, scenario and Monte Carlo runs on the case-history charts, and the security settings. |
 | `dev/qa_walkthrough.py` | A first-time user's path through all eight sections, pressing the real buttons, against a stand-in executable. |
 
 Prof. Wu's own validation cases can be loaded and checked against his
@@ -273,7 +273,7 @@ dashboard where it was used:
 - Palmen, L., & Kent, N. (2024). Use of a physically based erosion breach
   model for water and tailings dams within a probabilistic framework.
   *ANCOLD 2024 Conference Proceedings*.
-- Rana, N.M. (2026). *DLBreach Dashboard* (version 1.0.2) [software].
+- Rana, N.M. (2026). *DLBreach Dashboard* (version 1.0.3) [software].
   Zenodo. <https://doi.org/10.5281/zenodo.23307440>
 
 GitHub's **Cite this repository** button (from [CITATION.cff](CITATION.cff))

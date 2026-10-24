@@ -36,6 +36,7 @@ import pandas as pd
 
 from dlbreach_io import DEFAULT_PARAMS, _CARD_MAP, parse_out, summarise
 from dlbreach_mc import ALL_CANDIDATES
+from dlbreach_empirical import case_values
 
 # Parameters a scenario may vary. Structural settings (breach mode,
 # sediment type, stage-storage method) are included because sensitivity
@@ -335,6 +336,7 @@ def ensemble_from_outputs(base: dict, sample_df: pd.DataFrame,
         for c in cols:
             p[c] = float(r[c])
         s = summarise(df, crest_elev=p.get("emb_height"))
+        s.update(case_values(p, df))
         s.update({"realisation": i, "ok": True, "error": ""})
         rows.append(s)
         hydros[i] = _thin_hydrograph(df)

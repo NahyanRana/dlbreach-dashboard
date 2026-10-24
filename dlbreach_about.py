@@ -10,8 +10,8 @@ SUBTITLE = "An interactive Monte Carlo companion to a physically based dam breac
 AUTHOR = "Dr. Nahyan M. Rana"
 PREPARED_BY = ("Prepared by Dr. Nahyan M. Rana, Geosyntec Consultants and "
                "University of Waterloo")
-VERSION = "Version 1.0.2"
-VERSION_SHORT = "version 1.0.2"
+VERSION = "Version 1.0.3"
+VERSION_SHORT = "version 1.0.3"
 ALGORITHM_BY = "Algorithm by Prof. Weiming Wu, Clarkson University"
 CONTACT_EMAIL = "nahyan.rana@geosyntec.com"
 CONTACT_HTML = (
@@ -115,7 +115,7 @@ CITATIONS_HTML = (
     "<p>Palmen, L., & Kent, N. (2024). Use of a physically based erosion "
     "breach model for water and tailings dams within a probabilistic "
     "framework. <i>ANCOLD 2024 Conference Proceedings</i>.</p>"
-    "<p>Rana, N.M. (2026). DLBreach Dashboard (version 1.0.2) [software]. "
+    "<p>Rana, N.M. (2026). DLBreach Dashboard (version 1.0.3) [software]. "
     "Zenodo. https://doi.org/10.5281/zenodo.23307440</p>"
     "<p style='color:#5E6B77'>Related talk (abstract submitted): Rana, N.M. "
     "(2027). DLBreach Dashboard: An Open-Source, Interactive, Monte Carlo Interface to a Physical-Based Dam Breach Algorithm. Lightning talk, International Commission on Large "
@@ -156,8 +156,9 @@ source.
    realisations. Results give the minimum, average and maximum, envelopes
    through time for outflow and breach geometry, how each input drives the
    result, and any single realisation to inspect, play and download.
-6. **Case histories.** Your result among measured failures of
-   water-retaining dams (Froehlich 2016a; Xu and Zhang 2009).
+6. **Case histories.** Your single run among measured failures of
+   water-retaining dams (Froehlich 2016a; Xu and Zhang 2009), with your
+   scenario runs and Monte Carlo realisations added if you choose.
 7. **Export.** A report appendix in PDF or Word with the sections you
    choose, including the Monte Carlo envelopes, the input-against-result
    charts and the case-history comparison.
@@ -200,7 +201,8 @@ PAGE_GUIDE = {
                     "Sensitivity scenarios."),
     "Case histories": ("Set your result among measured failures of "
                        "water-retaining dams.",
-                       "Your result appears once you have a run on Single run."),
+                       "Add the single run, scenario runs and Monte Carlo "
+                       "realisations with the switches at the top."),
     "Export": ("Build a report appendix from the inputs and results.",
                "Sections that need results unlock as you complete the run, "
                "scenarios and Monte Carlo."),

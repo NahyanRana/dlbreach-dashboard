@@ -52,7 +52,7 @@ packages and installs them, so no manual `pip install` is needed.
 
 ## Using it
 
-Version 1.0.2 covers water-retaining dams. Solid waste (tailings, coal ash)
+Version 1.0.3 covers water-retaining dams. Solid waste (tailings, coal ash)
 support is paused; see `TAILINGS_TODO.md`.
 
 Work through the sections in the contents panel on the left, in order.
@@ -73,7 +73,8 @@ source. The About page has a fuller *Getting started*.
 5. **Monte Carlo** — ensembles around chosen runs; summary, envelopes for
    outflow and breach geometry, input-against-result charts, and any single
    realisation to inspect, play and download.
-6. **Case histories** — your result among measured water-dam failures.
+6. **Case histories** — your single run among measured water-dam failures;
+   switch on scenario runs and Monte Carlo realisations to add them.
 7. **Export** — PDF or Word report appendix, including Monte Carlo
    envelopes, input-against-result charts and the case-history comparison.
 

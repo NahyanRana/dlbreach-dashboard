@@ -115,7 +115,8 @@ def chart(df: pd.DataFrame, x_title: str, y_title: str, key: str,
           kind: str = "line", log_x: bool = False, log_y: bool = False,
           one_to_one: bool = False, height: int = 340,
           colours: dict | None = None, highlight: str = MODEL_SERIES,
-          dashed: list | None = None, x_auto_max: float | None = None):
+          dashed: list | None = None, x_auto_max: float | None = None,
+          faint: list | None = None):
     """
     A chart with an "Axes" control holding min and max for each axis and
     log toggles. df is long-form with columns x, y, Series and optionally
@@ -127,6 +128,9 @@ def chart(df: pd.DataFrame, x_title: str, y_title: str, key: str,
     `highlight` is drawn as a large black-edged diamond. Series listed in
     `dashed` are drawn dashed. For line charts the user can change the
     colour and line style of each series in the same control.
+
+    In a scatter, series listed in `faint` (Monte Carlo realisations) are
+    drawn as small, light points beneath the others.
 
     x_auto_max, when given, is the upper x limit used while "x max" is
     blank: for time series, the end of the active period rather than the
@@ -237,7 +241,8 @@ def chart(df: pd.DataFrame, x_title: str, y_title: str, key: str,
                                       }],
                        "mark": {"type": "point", "filled": True, "size": 330,
                                 "shape": "diamond", "stroke": "black",
-                                "strokeWidth": 1.2, "clip": True},
+                                "strokeWidth": 1.4, "fillOpacity": 0.35,
+                                "clip": True},
                        "encoding": enc})
         # each data set also gets its own marker shape (as in the PDF)
         shapes = ["circle", "triangle-up", "square", "triangle-down", "cross"]
@@ -254,10 +259,16 @@ def chart(df: pd.DataFrame, x_title: str, y_title: str, key: str,
                                  "title": None, "legend": enc["color"]["legend"],
                                  "scale": {"domain": names, "range": rng}})
         enc = dict(enc, shape=enc_s["shape"])
+        faint = [n for n in (faint or []) if n in names]
         layers.insert(0, {"transform": [{"filter": {"not": {
-            "field": "Series", "oneOf": [highlight]}}}],
+            "field": "Series", "oneOf": [highlight] + faint}}}],
             "mark": {"type": "point", "filled": True, "size": 70,
                      "opacity": 0.85, "clip": True}, "encoding": enc_s})
+        if faint:
+            layers.insert(0, {"transform": [{"filter": {
+                "field": "Series", "oneOf": faint}}],
+                "mark": {"type": "point", "filled": True, "size": 22,
+                         "opacity": 0.4, "clip": True}, "encoding": enc_s})
     if one_to_one:
         lo = float(min(d["x"].min(), d["y"].min()))
         hi = float(max(d["x"].max(), d["y"].max()))

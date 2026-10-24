@@ -27,6 +27,7 @@ import pandas as pd
 
 from dlbreach_io import (build_input_text, run_case, parse_out, summarise,
                          write_data_file)
+from dlbreach_empirical import case_values
 
 
 # ---------------------------------------------------------------------
@@ -166,6 +167,7 @@ def _run_one(args):
                      "error": (res["stderr"] or "no output file")[:300]}, None, None)
         df = parse_out(res["out_path"])
         s = summarise(df, crest_elev=params.get('emb_height'))
+        s.update(case_values(params, df))
         s.update({"realisation": idx, "ok": True, "error": ""})
         hydro = _thin_hydrograph(df)
         geom = _thin_geometry(df)

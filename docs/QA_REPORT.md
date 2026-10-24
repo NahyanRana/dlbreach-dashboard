@@ -1,7 +1,9 @@
-# QA report — v1.0.2 (24 October 2026)
+# QA report — v1.0.3 (24 October 2026)
 
-v1.0.1 and v1.0.2 change documentation and citation only (see CHANGELOG);
-the code and its testing are those of v1.0.0.
+v1.0.3 adds scenario runs and Monte Carlo realisations to the case-history
+charts (section 1c). v1.0.1 and v1.0.2 changed documentation and citation
+only (see CHANGELOG); the rest of the code and its testing are those of
+v1.0.0.
 
 v1.0.0 is v0.16 with the Windows download, local-only publication and the
 release citation; the testing below applies to it.
@@ -16,7 +18,7 @@ verified on a Windows computer.
 | `test_core.py` | Calculations; input files written back card for card (a made-up levee case, a made-up cored case with a clay cover, and Prof. Wu's eleven validation inputs); clay core read, written, switched off, partial sets, geometry and fit; clay cover thickness; report figures; data file paths; inputs offered for sampling | Pass |
 | `test_app_headless.py` | All eight pages × four worked examples, local and browser modes (64 page runs); scenario and Monte Carlo results; PDF and Word export | Pass |
 | `dev/qa_walkthrough.py` | A first-time user's path through all eight sections, pressing the real buttons | Pass |
-| `dev/qa_features.py` | 97 feature checks, below | 97 of 97 |
+| `dev/qa_features.py` | 121 feature checks, below | 121 of 121 |
 | Private project benchmarks | Benchmark reproduced exactly; its input written back card for card; practitioner run log read (kept out of the repository) | Pass |
 | Confidential-name scan | The 80 files that would be published | None found |
 
@@ -48,6 +50,31 @@ and inspected, with the PDF pages for four of them. This found the missing
 axis labels, a breach drawn over the abutments, labels cut off at the
 frame, crowded animation readouts, and barrier sections too flat to read;
 all fixed.
+
+## 1c. Case-history charts with scenario and Monte Carlo runs (v1.0.3)
+
+Checked in `dev/qa_features.py` for T1 (overtopping) and T2 (piping), with
+three scenario runs and a 20-realisation ensemble in which the erosion
+limit and grain size vary:
+
+- each scenario run and realisation stores the water volume above the
+  breach invert and the formation time; three realisations and one
+  scenario were run again and recalculated independently, and matched;
+- by default only the single run is shown; with the switches on, all four
+  charts carry every realisation and scenario run whose values plot on
+  that chart's axes, counted chart by chart;
+- realisations are drawn first, small and light; the single run last;
+  hover names the run and realisation; the single run can be switched off;
+- two ensembles appear as two series; results from before v1.0.3 are left
+  out and named on the page;
+- the PDF and Word appendix carry the same runs, and the caption names
+  each marker;
+- the browser round trip (outputs uploaded) stores the same values.
+
+The PDF page was rendered and inspected. The on-screen chart was checked
+through its chart specification; it was not viewed in a browser here.
+As elsewhere, the stand-in gives made-up numbers, so these checks cover
+placement and behaviour, not DLBreach results.
 
 ## 2. Independent review of this release
 

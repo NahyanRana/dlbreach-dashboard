@@ -41,7 +41,7 @@ import dlbreach_help as HLP
 import dlbreach_templates as TPL
 import dlbreach_units as U
 import dlbreach_mc as MCX
-from dlbreach_empirical import (derive_inputs, dlbreach_guidance,
+from dlbreach_empirical import (case_values, derive_inputs, dlbreach_guidance,
                                 eroded_dam_volume, recommended_manning_n,
                                 storage_at)
 from dlbreach_io import (DEFAULT_PARAMS, browse_for_executable,
@@ -2263,12 +2263,13 @@ def page_scenarios():
 
 def _scenario_results(names, params, groups, outs) -> dict:
     from dlbreach_mc import _thin_geometry
-    rows, hyd, geo = [], {}, {}
+    rows, hyd, geo, case = [], {}, {}, {}
     for r in names:
         df = outs.get(r)
         row = {"Run": r, "Group": groups.get(r, "")}
         if df is not None:
             s = summarise(df, crest_elev=params[r]["emb_height"])
+            case[r] = {**s, **case_values(params[r], df)}
             s["eroded_m3"] = eroded_dam_volume(params[r], s["final_bottom_width_m"],
                                                s["final_bottom_elev_m"],
                                                s["final_side_slope"])
@@ -2281,7 +2282,7 @@ def _scenario_results(names, params, groups, outs) -> dict:
             geo[r] = _thin_geometry(df)
         rows.append(row)
     return {"summary": pd.DataFrame(rows), "hydros": hyd, "geoms": geo,
-            "params": params}
+            "params": params, "case": case}
 
 
 def animate_run(p: dict, geom: pd.DataFrame, key: str):
@@ -2817,10 +2818,82 @@ WATER_CASE_NOTE = ("Some dams appear in both water-dam compilations; where "
                    "Froehlich revised a peak discharge the two values differ.")
 
 
-def water_case_panels(pt: dict) -> list[dict]:
-    """The four water-dam case-history charts, for the page and the report."""
+CASE_SCEN = "Scenario runs"
+CASE_MC = "Monte Carlo"
+CASE_SCEN_COLOUR = "#2E8B57"
+CASE_MC_COLOURS = ["#5E6B77", "#7A5AA6", "#C9A227", "#17A2B8", "#8A5A2B"]
+
+
+def _case_row(src: dict, series: str, event: str) -> dict:
+    """One run as the five case-history quantities."""
+    def f(k):
+        v = src.get(k)
+        try:
+            v = float(v)
+        except (TypeError, ValueError):
+            return None
+        return v if np.isfinite(v) else None
+    tw, bw = f("final_top_width_m"), f("final_bottom_width_m")
+    return {"Hb": f("max_breach_depth_m"), "Qp": f("peak_outflow_m3s"),
+            "Vw": f("water_volume_above_invert_m3"), "tf": f("formation_time_hr"),
+            "Bave": (tw + bw) / 2 if (tw is not None and bw is not None) else None,
+            "Series": series, "Event": event}
+
+
+def case_overlays(scen: bool, mc: bool) -> tuple[list, dict, list, list]:
+    """Scenario and Monte Carlo runs as points for the case-history charts:
+    (rows, colours by series, series drawn small and light, runs left out).
+    Results from before version 1.0.3 lack the stored water volume and
+    formation time, so they are left out and named in the last list."""
+    rows, colours, faint, missing = [], {}, [], []
+    sc = st.session_state.get("scen_store") if scen else None
+    if sc:
+        for r, src in (sc.get("case") or {}).items():
+            rows.append(_case_row(src, CASE_SCEN, r))
+        if sc.get("case") is None:
+            missing.append("the scenario runs")
+        colours[CASE_SCEN] = CASE_SCEN_COLOUR
+    store = (st.session_state.get("mc_store") or {}) if mc else {}
+    for j, (name, ent) in enumerate(store.items()):
+        res = ent["results"]
+        ser = CASE_MC if len(store) == 1 else f"{CASE_MC}: {name}"
+        if "formation_time_hr" not in res.columns:
+            missing.append(name)
+            continue
+        ok = res[res["ok"] == True]                     # noqa: E712
+        for _, r in ok.iterrows():
+            rows.append(_case_row(r.to_dict(), ser,
+                                  f"{name}, realisation {int(r['realisation'])}"))
+        colours[ser] = CASE_MC_COLOURS[j % len(CASE_MC_COLOURS)]
+        faint.append(ser)
+    return rows, colours, faint, missing
+
+
+CASE_AXES = {"c_qhb": ("Hb", "Qp"), "c_qvw": ("Vw", "Qp"),
+             "c_bvw": ("Vw", "Bave"), "c_tvw": ("Vw", "tf")}
+
+
+def _with_overlays(data: pd.DataFrame, key: str, extra: list | None) -> pd.DataFrame:
+    """Case-history table with scenario and Monte Carlo points added before
+    this analysis, so the single run stays last in the legend."""
+    if not extra:
+        return data
+    xk, yk = CASE_AXES[key]
+    add = pd.DataFrame([{"x": e[xk], "y": e[yk], "Series": e["Series"],
+                         "Event": e["Event"]} for e in extra
+                        if e.get(xk) is not None and e.get(yk) is not None
+                        and e[xk] > 0 and e[yk] > 0])
+    if add.empty:
+        return data
+    model = data["Series"] == CASES.MODEL
+    return pd.concat([data[~model], add, data[model]], ignore_index=True)
+
+
+def water_case_panels(pt: dict, extra: list | None = None) -> list[dict]:
+    """The four water-dam case-history charts, for the page and the report.
+    extra: scenario and Monte Carlo points from case_overlays."""
     vw = "Water volume above breach invert (m³)"
-    return [
+    pans = [
         dict(title="Peak outflow against breach height",
              sub="Froehlich (2016a), 41 failures; Xu and Zhang (2009), 75.",
              data=CASES.water_peak_vs_breach_height({"x": pt.get("Hb"), "y": pt.get("Qp")}),
@@ -2842,26 +2915,89 @@ def water_case_panels(pt: dict) -> list[dict]:
              data=CASES.water_time_vs_volume({"x": pt.get("Vw"), "y": pt.get("tf")}),
              xlabel=vw, ylabel="Failure time (h)", key="c_tvw",
              logx=True, logy=True)]
+    for pn in pans:
+        pn["data"] = _with_overlays(pn["data"], pn["key"], extra)
+    return pans
+
+
+def case_selection() -> tuple[dict, list, dict, list, list]:
+    """The runs chosen on Case histories, for the page and the report:
+    (single-run point, scenario and Monte Carlo rows, colours, faint
+    series, runs left out)."""
+    df = st.session_state.result_df
+    s, pt = case_point(df)
+    if not st.session_state.get("keep_cases_det", True):
+        pt = {}
+    rows, cols, faint, missing = case_overlays(
+        bool(st.session_state.get("keep_cases_scen", False)),
+        bool(st.session_state.get("keep_cases_mc", False)))
+    return pt, rows, cols, faint, missing
+
+
+MC_CASE_NOTE = ("The spread of a Monte Carlo ensemble reflects uncertainty "
+                "in the inputs for one dam; the scatter of the case histories "
+                "reflects differences between many dams.")
+
+
+def case_report_styles(cols: dict, faint: list) -> dict:
+    """Report marker styles: (colour, marker, size, alpha) by series."""
+    st_ = {}
+    for name, c in cols.items():
+        st_[name] = (c, "o", 9, 0.45) if name in faint else (c, "^", 34, 0.95)
+    return st_
 
 
 def page_cases():
     df = st.session_state.result_df
-    s, pt = case_point(df)
+    s, _ = case_point(df)
+    has_scen = bool(st.session_state.get("scen_store"))
+    has_mc = bool(st.session_state.get("mc_store"))
     if s:
         stale_notice()
     callout("info", "Measured outcomes only.",
-            "Your result is the black diamond among real failures. No regression "
-            "lines are drawn. " + CASES.COMPLETENESS_NOTE
-            + ("" if s else " Run a case on Single run to add your result."))
+            "Your single run is the black diamond among real failures; scenario "
+            "runs and Monte Carlo realisations can be added below. No regression "
+            "lines are drawn. " + CASES.COMPLETENESS_NOTE)
+    if not is_tailings():
+        with st.container(border=True):
+            section("Runs to show", "Each run is placed by its own inputs and "
+                    "results. The spread of a Monte Carlo ensemble reflects "
+                    "uncertainty in the inputs for one dam; the scatter of the "
+                    "case histories reflects differences between many dams. "
+                    "Agreement shows the results are plausible, not that they "
+                    "are right for this dam.")
+            seed("keep_cases_det", True)
+            seed("keep_cases_scen", False)
+            seed("keep_cases_mc", False)
+            t1, t2, t3 = st.columns(3)
+            t1.toggle("Single run", key="keep_cases_det", disabled=not s,
+                      help="The run on Single run, as a black diamond.")
+            t2.toggle("Scenario runs", key="keep_cases_scen", disabled=not has_scen,
+                      help="Every run on Sensitivity scenarios, as green markers. "
+                           "Hover for the run name.")
+            t3.toggle("Monte Carlo realisations", key="keep_cases_mc",
+                      disabled=not has_mc,
+                      help="Every completed realisation, as small light points, "
+                           "one colour per ensemble.")
+            avail = [n for n, ok in (("Single run", s), ("Sensitivity scenarios",
+                     has_scen), ("Monte Carlo", has_mc)) if not ok]
+            if avail:
+                st.caption("Nothing to add yet from: " + ", ".join(avail) + ".")
+    pt, extra, cols, faint, missing = case_selection()
+    if missing:
+        callout("note", "Some runs are not shown.",
+                "These results were made before version 1.0.3, which stores "
+                "the water volume and formation time each chart needs: "
+                + ", ".join(missing) + ". Run them again to add them.")
 
     def card(title, sub, data, xt, yt, key, lx, ly, one=False):
         with st.container(border=True):
             section(title, sub)
             chart(data, xt, yt, key, kind="scatter", log_x=lx, log_y=ly,
-                  one_to_one=one, height=300)
+                  one_to_one=one, height=300, colours=cols, faint=faint)
 
     if not is_tailings():
-        pans = water_case_panels(pt)
+        pans = water_case_panels(pt, extra)
         c1, c2 = st.columns(2, gap="large")
         for col, idxs in ((c1, (0, 2)), (c2, (1, 3))):
             with col:
@@ -2939,7 +3075,7 @@ def page_export():
              "mc_env": bool(st.session_state.get("mc_store")),
              "mc_drivers": any(d.get("cols") for d in
                                (st.session_state.get("mc_store") or {}).values()),
-             "cases": df is not None, "cards": True}
+             "cases": df is not None or bool(case_selection()[1]), "cards": True}
     if df is not None:
         stale_notice()
     with st.container(border=True):
@@ -2997,13 +3133,20 @@ def page_export():
         if mc:
             ex["mc_table"] = mc_summary_table(mc)
             ex["mc_env"], ex["mc_drivers"] = mc_report_data(mc)
-        if df is not None:
-            _, pt = case_point(df)
+        pt_c, extra_c, cols_c, faint_c, _ = case_selection()
+        if pt_c or extra_c:
+            shown = (["the single run is the black-edged diamond"] if pt_c else []) \
+                + (["scenario runs are green triangles"]
+                   if any(e["Series"] == CASE_SCEN for e in extra_c) else []) \
+                + (["Monte Carlo realisations are small light points"]
+                   if faint_c else [])
             ex["cases"] = {
-                "panels": water_case_panels(pt),
+                "panels": [dict(pn, styles=case_report_styles(cols_c, faint_c))
+                           for pn in water_case_panels(pt_c, extra_c)],
                 "refs": [DATA.CITATIONS[k] for k in WATER_CASE_REFS],
-                "note": ("Measured outcomes only; this analysis is the "
-                         "black-edged diamond. No regression lines are drawn. "
+                "note": ("Measured outcomes only; " + "; ".join(shown)
+                         + ". No regression lines are drawn. "
+                         + (MC_CASE_NOTE + " " if faint_c else "")
                          + CASES.COMPLETENESS_NOTE + " " + WATER_CASE_NOTE)}
         meta = {"title": st.session_state.keep_rep_title,
                 "subtitle": st.session_state.keep_rep_sub,

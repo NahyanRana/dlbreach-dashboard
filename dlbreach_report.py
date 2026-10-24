@@ -335,9 +335,18 @@ def _draw_case(ax, panel: dict):
     k = 0
     for name, g in d.groupby("Series", sort=False):
         g = g[(g["x"] > 0) & (g["y"] > 0)] if (panel["logx"] or panel["logy"]) else g
+        sty = (panel.get("styles") or {}).get(name)
         if name == panel.get("model", "This analysis"):
-            ax.scatter(g["x"], g["y"], s=90, marker="D", color="#FFFFFF",
-                       edgecolor="black", lw=1.4, zorder=5, label=name)
+            # hollow, so a scenario or realisation at the same place shows
+            ax.scatter(g["x"], g["y"], s=90, marker="D", facecolor="none",
+                       edgecolor="black", lw=1.5, zorder=5, label=name)
+        elif sty:
+            # scenario runs and Monte Carlo realisations: drawn over the case
+            # histories, realisations small and light so the cloud reads
+            col, mk, sz, al = sty
+            ax.scatter(g["x"], g["y"], s=sz, color=col, marker=mk, alpha=al,
+                       edgecolor="none" if sz < 15 else "white", lw=0.4,
+                       zorder=3 if sz < 15 else 4, label=name)
         else:
             # each data set has its own colour and marker shape, so they stay
             # distinct in print and for colour-blind readers
@@ -371,7 +380,14 @@ def _draw_case(ax, panel: dict):
     ax.set_xlabel(panel["xlabel"], fontsize=7.5)
     ax.set_ylabel(panel["ylabel"], fontsize=7.5)
     ax.tick_params(which="both", labelsize=7)
-    ax.legend(fontsize=6.5, loc="best")
+    leg = ax.legend(fontsize=6.5, loc="best")
+    # legend symbols at a readable size, whatever the point size drawn
+    for h in getattr(leg, "legend_handles", getattr(leg, "legendHandles", [])):
+        try:
+            if h.get_sizes()[0] < 20:
+                h.set_sizes([20]); h.set_alpha(0.9)
+        except (AttributeError, IndexError):
+            pass
 
 
 def _env_tmax(panels: list) -> float | None:

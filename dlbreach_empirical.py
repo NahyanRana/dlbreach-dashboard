@@ -190,6 +190,24 @@ def downcutting_time_hr(df: pd.DataFrame) -> float | None:
     return float(t[floor[0]] - t[i_start])
 
 
+def case_values(p: dict, df: pd.DataFrame) -> dict:
+    """
+    The two case-history quantities that need the full output and the
+    run's own inputs: water volume above the final breach invert at the
+    onset of downcutting, and breach formation time (as derive_inputs).
+    Stored with each scenario and Monte Carlo realisation, because the
+    thinned breach record kept for drawing is too coarse to time the
+    breach reliably. NaN where a value cannot be found.
+    """
+    try:
+        d = derive_inputs(p, df)
+        vw, tf = d.get("Vw"), d.get("tf_hr")
+    except Exception:                            # noqa: BLE001
+        vw, tf = None, None
+    return {"water_volume_above_invert_m3": float(vw) if vw is not None else np.nan,
+            "formation_time_hr": float(tf) if tf is not None else np.nan}
+
+
 WAVG_DEFINITIONS = {
     "mean": "Mean of crest width and base width",
     "base": "Base width, between upstream and downstream toes",

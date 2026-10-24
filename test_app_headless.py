@@ -56,6 +56,7 @@ class _Stub(types.ModuleType):
         self.session_state = _State()
         self.calls = []
         self.html_out = []          # drawings passed to components.html
+        self.specs = []             # Vega-Lite specifications drawn
         self.md_out = []            # markdown text (callouts, tiles)
         self.contained = []
         self.keys_seen = set()
@@ -180,6 +181,8 @@ class _Stub(types.ModuleType):
             if name == "vega_lite_chart" and len(a) > 1:
                 spec = a[1]
                 assert "layer" in spec or "mark" in spec, "bad vega spec"
+            if name == "vega_lite_chart" and isinstance(k.get("spec"), dict):
+                self.specs.append(k["spec"])
             return None
         return _record
 

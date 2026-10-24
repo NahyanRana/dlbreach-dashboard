@@ -97,6 +97,7 @@ def render(press=(), browser=False) -> dict:
     try:
         ST.calls.clear()
         ST.html_out.clear()
+        ST.specs.clear()
         ST.md_out.clear()
         ST.keys_seen.clear()
         g = {"__name__": "__main__", "__file__": str(ROOT / "app.py")}
@@ -875,6 +876,245 @@ def schematic_checks():
             assert "lies below the base of the stage-storage" not in md
 
 
+# ---------------------------------------------------------------------------
+CASE_KEYS = ["c_qhb", "c_qvw", "c_bvw", "c_tvw"]
+
+
+def _case_specs() -> list[dict]:
+    """The four case-history chart specifications of the last render."""
+    sp = [x for x in ST.specs
+          if x["layer"] and "scatter" not in str(x.get("title", ""))
+          and any("x" in v and "y" in v for v in x["data"]["values"][:1])]
+    titles = [x["layer"][-1]["encoding"]["x"]["title"] for x in sp]
+    assert len(sp) >= 4, (len(sp), titles)
+    sp = sp[-4:]
+    assert sorted(_case_key(x) for x in sp) == sorted(CASE_KEYS), titles
+    return sp
+
+
+def _case_key(spec: dict) -> str:
+    """Which of the four charts a specification is, from its axis titles."""
+    enc = spec["layer"][-1]["encoding"]
+    x, y = enc["x"]["title"], enc["y"]["title"]
+    if x.startswith("Breach height"):
+        return "c_qhb"
+    return {"Peak outflow (m³/s)": "c_qvw", "Average breach width (m)": "c_bvw",
+            "Failure time (h)": "c_tvw"}[y]
+
+
+def _series_counts(spec: dict) -> dict:
+    out = {}
+    for v in spec["data"]["values"]:
+        out[v["Series"]] = out.get(v["Series"], 0) + 1
+    return out
+
+
+def overlay_checks(case: str):
+    """Scenario and Monte Carlo runs on the four case-history charts."""
+    import numpy as np
+    from dlbreach_empirical import derive_inputs
+    from dlbreach_mc import realisation_params
+    area = f"Case-history overlays ({case[:2]})"
+    fresh()
+    load_example(case)
+    SS["page"] = PAGES[6]
+    render()
+
+    @check(area, "before any runs: toggles off, nothing to add yet")
+    def _():
+        md = " ".join(ST.md_out)
+        assert "Nothing to add yet from: Single run, Sensitivity scenarios, Monte Carlo" in md, md[-400:]
+
+    SS["page"] = PAGES[3]
+    render(press=("Run DLBreach",))
+    SS["page"] = PAGES[4]
+    render()
+    n_scen = int(SS.get("keep_scen_n", 3))
+    render(press=(f"Run all {n_scen} runs",))
+    SS["page"] = PAGES[5]
+    SS["mc_nreal"] = 20
+    render()
+    # vary the erosion limit and grain size so the realisations spread out
+    SS["mc_chosen"] = ["hard_bottom_elev", "sed_d50"]
+    render()
+    SS["mc_d_hard_bottom_elev"] = SS["mc_d_sed_d50"] = "uniform"
+    render()
+    hb = float(SS["params"]["emb_height"])
+    SS["mc_lo_hard_bottom_elev"], SS["mc_hi_hard_bottom_elev"] = 0.0, 0.6 * hb
+    render()
+    render(press=("Run Monte Carlo",))
+
+    @check(area, "each scenario and realisation stores water volume and formation time")
+    def _():
+        case_ = SS["scen_store"]["case"]
+        assert len(case_) == n_scen, len(case_)
+        assert all(np.isfinite(v["water_volume_above_invert_m3"]) for v in case_.values())
+        res = next(iter(SS["mc_store"].values()))["results"]
+        ok = res[res["ok"] == True]                         # noqa: E712
+        for c in ("water_volume_above_invert_m3", "formation_time_hr"):
+            assert c in res.columns, c
+        assert ok["water_volume_above_invert_m3"].notna().all()
+        return (f"{n_scen} scenarios, {len(ok)} realisations; formation time "
+                f"found for {int(ok['formation_time_hr'].notna().sum())}")
+
+    @check(area, "stored values equal a fresh run of the same inputs")
+    def _():
+        ent = next(iter(SS["mc_store"].values()))
+        res, cols, base = ent["results"], ent["cols"], ent["base"]
+        checked = 0
+        with tempfile.TemporaryDirectory() as td:
+            for i in list(res.index[res["ok"] == True])[:3]:        # noqa: E712
+                p = realisation_params(base, res, i, cols)
+                r = run_case(EXE, build_input_text(p), case_name="chk", work_dir=td)
+                d = derive_inputs(p, parse_out(r["out_path"]))
+                for k, col in (("Vw", "water_volume_above_invert_m3"),
+                               ("tf_hr", "formation_time_hr")):
+                    a, b = d[k], res.loc[i, col]
+                    if a is None:
+                        assert pd.isna(b), (k, a, b)
+                    else:
+                        assert abs(a - b) <= 1e-9 * max(1.0, abs(a)), (k, a, b)
+                checked += 1
+            sc = SS["scen_store"]
+            name = next(iter(sc["case"]))
+            p = sc["params"][name]
+            r = run_case(EXE, build_input_text(p), case_name="chk", work_dir=td)
+            d = derive_inputs(p, parse_out(r["out_path"]))
+            assert abs(d["Vw"] - sc["case"][name]["water_volume_above_invert_m3"]) \
+                <= 1e-9 * max(1.0, d["Vw"])
+        return f"{checked} realisations and scenario '{name}' recomputed"
+
+    SS["page"] = PAGES[6]
+
+    @check(area, "default: the single run only")
+    def _():
+        render()
+        for sp in _case_specs():
+            c = _series_counts(sp)
+            assert c.get("This analysis") == 1, c
+            assert not any(k.startswith(("Monte Carlo", "Scenario")) for k in c), c
+
+    @check(area, "scenarios and Monte Carlo added to all four charts")
+    def _():
+        SS["keep_cases_scen"] = True
+        SS["keep_cases_mc"] = True
+        render()
+        res = next(iter(SS["mc_store"].values()))["results"]
+        ok = res[res["ok"] == True]                         # noqa: E712
+        tw = ok["final_top_width_m"] + ok["final_bottom_width_m"]
+        want = {"c_qhb": ((ok["max_breach_depth_m"] > 0) & (ok["peak_outflow_m3s"] > 0)),
+                "c_qvw": ((ok["water_volume_above_invert_m3"] > 0) & (ok["peak_outflow_m3s"] > 0)),
+                "c_bvw": ((ok["water_volume_above_invert_m3"] > 0) & (tw > 0)),
+                "c_tvw": ((ok["water_volume_above_invert_m3"] > 0) & (ok["formation_time_hr"] > 0))}
+        got = []
+        for sp in _case_specs():
+            key = _case_key(sp)
+            c = _series_counts(sp)
+            assert c.get("This analysis") == 1, c
+            assert c.get("Monte Carlo", 0) == int(want[key].sum()), (key, c, int(want[key].sum()))
+            assert 1 <= c.get("Scenario runs", 0) <= n_scen, (key, c)
+            got.append(f"{c.get('Monte Carlo', 0)}+{c.get('Scenario runs', 0)}")
+        hbs = ok["max_breach_depth_m"]
+        assert hbs.max() - hbs.min() > 0.05 * hbs.max(), "ensemble did not spread"
+        return "MC+scenario points per chart: " + ", ".join(got)
+
+    @check(area, "realisations drawn small and light; scenarios and single run on top")
+    def _():
+        sp = _case_specs()[0]
+        marks = [(l["mark"].get("size"), l["mark"].get("opacity"),
+                  json.dumps(l.get("transform", ""))) for l in sp["layer"]]
+        faint = [m for m in marks if m[0] == 22]
+        assert faint and '"oneOf": ["Monte Carlo"]' in faint[0][2], marks
+        assert marks.index(faint[0]) == 0, "realisations not drawn first"
+        assert marks[-1][0] == 330, "single run not drawn last"
+        leg = sp["layer"][-1]["encoding"]["color"]["scale"]["domain"]
+        assert leg[-1] == "This analysis", leg
+
+    @check(area, "hover names the run and realisation")
+    def _():
+        ev = {v["Event"] for v in _case_specs()[0]["data"]["values"]
+              if v["Series"] in ("Monte Carlo", "Scenario runs")}
+        assert any(", realisation " in e for e in ev), list(ev)[:3]
+        assert set(SS["scen_store"]["case"]) & ev, list(ev)[:5]
+
+    @check(area, "single run switched off removes the diamond")
+    def _():
+        SS["keep_cases_det"] = False
+        render()
+        for sp in _case_specs():
+            assert "This analysis" not in _series_counts(sp)
+        SS["keep_cases_det"] = True
+
+    @check(area, "two ensembles: one series and colour each")
+    def _():
+        store = dict(SS["mc_store"])
+        k0 = next(iter(store))
+        SS["mc_store"] = {k0: store[k0], "Second": store[k0]}
+        render()
+        c = _series_counts(_case_specs()[0])
+        SS["mc_store"] = store
+        assert f"Monte Carlo: {k0}" in c and "Monte Carlo: Second" in c, c
+        return ", ".join(f"{k} {v}" for k, v in c.items() if k.startswith("Monte"))
+
+    @check(area, "results from before 1.0.3: left out and named")
+    def _():
+        store = SS["mc_store"]
+        k0 = next(iter(store))
+        old = dict(store[k0], results=store[k0]["results"].drop(
+            columns=["water_volume_above_invert_m3", "formation_time_hr"]))
+        SS["mc_store"] = {k0: old}
+        render()
+        md = " ".join(ST.md_out)
+        c = _series_counts(_case_specs()[0])
+        SS["mc_store"] = store
+        assert "Some runs are not shown." in md and k0 in md
+        assert not any(k.startswith("Monte Carlo") for k in c), c
+
+    @check(area, "PDF and Word appendix carry the added runs")
+    def _():
+        SS["page"] = PAGES[7]
+        SS["keep_rsec_cases"] = True
+        out = []
+        for fmt in ("PDF", "Word"):
+            SS["keep_rep_fmt"] = fmt
+            render()
+            render(press=(f"Build {fmt}",))
+            data_, _, _ = SS["report_file"]
+            if fmt == "PDF":
+                assert data_[:5] == b"%PDF-"
+                out.append(f"PDF {len(data_) // 1024} kB")
+            else:
+                import docx
+                d = docx.Document(io.BytesIO(data_))
+                text = " ".join(p.text for p in d.paragraphs)
+                assert "scenario runs are green triangles" in text, text[:300]
+                assert "Monte Carlo realisations are small light points" in text
+                out.append("Word note names both")
+        SS["page"] = PAGES[6]
+        return "; ".join(out)
+
+    @check(area, "browser Monte Carlo (outputs uploaded) also stores the values")
+    def _():
+        fresh()
+        load_example(case, browser=True)
+        SS["page"] = PAGES[5]
+        SS["mc_nreal"] = 10
+        DOWNLOADS.clear()
+        render(browser=True)
+        lab = next(k for k in DOWNLOADS if k.startswith("1 · Download") and "input files" in k)
+        UPLOADS["mc_out_up"] = [Upload("mc.zip", standin_outputs(zip_inputs(DOWNLOADS[lab][0])))]
+        render(browser=True)
+        res = next(iter(SS["mc_store"].values()))["results"]
+        UPLOADS.pop("mc_out_up")
+        assert res.loc[res["ok"] == True, "water_volume_above_invert_m3"].notna().all()  # noqa: E712
+        SS["page"] = PAGES[6]
+        SS["keep_cases_mc"] = True
+        render(browser=True)
+        c = _series_counts(_case_specs()[0])
+        assert c.get("Monte Carlo", 0) >= 1, c
+        return f"{c['Monte Carlo']} realisations plotted"
+
+
 def main() -> int:
     global EXE
     if os.name == "nt":
@@ -885,6 +1125,8 @@ def main() -> int:
     project_checks()
     loading_checks()
     schematic_checks()
+    overlay_checks("T1_water_overtopping")
+    overlay_checks("T2_water_piping")
     security_checks()
     w = max(len(n) for _, n, _, _ in RESULTS)
     area = None
