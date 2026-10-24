@@ -10,8 +10,8 @@ SUBTITLE = "An interactive Monte Carlo companion to a physically based dam breac
 AUTHOR = "Dr. Nahyan M. Rana"
 PREPARED_BY = ("Prepared by Dr. Nahyan M. Rana, Geosyntec Consultants and "
                "University of Waterloo")
-VERSION = "Version 1.0.1"
-VERSION_SHORT = "version 1.0.1"
+VERSION = "Version 1.0.2"
+VERSION_SHORT = "version 1.0.2"
 ALGORITHM_BY = "Algorithm by Prof. Weiming Wu, Clarkson University"
 CONTACT_EMAIL = "nahyan.rana@geosyntec.com"
 CONTACT_HTML = (
@@ -77,10 +77,32 @@ LIMITATIONS = """
   are recommended.
 """
 
+FOUNDATIONS = """
+### Foundational methodology
+
+The dashboard implements the probabilistic approach of **Palmen and Kent
+(2024)**: DLBreach (Wu 2013, 2016) is run within a Monte Carlo framework,
+with uncertain inputs sampled from statistical distributions and the
+resulting breach outputs analysed as distributions. The approach includes
+sensitivity checks on individual parameters, input–output correlation,
+selection of representative realisations, and comparison with historical
+failure databases. Other breach models using a Monte Carlo approach
+include Embrea (HR Wallingford 2024) and McBreach (Kleinschmidt 2024). The
+dashboard provides an interactive interface to this method and adds no
+physics of its own.
+
+- Palmen, L., & Kent, N. (2024). Use of a physically based erosion breach
+  model for water and tailings dams within a probabilistic framework.
+  *ANCOLD 2024 Conference Proceedings*.
+- HR Wallingford (2024). *Embrea*. https://www.dambreach.org/tools/embrea
+- Kleinschmidt (2024). *McBreach*. https://www.kleinschmidtgroup.com/mcbreach/
+"""
+
 HOW_TO_CITE = """
 ### How to cite
 
-Please cite the model, and the dashboard where it was used:
+Please cite the model, the method it implements (Palmen and Kent 2024,
+above), and the dashboard where it was used:
 """
 
 CITATIONS_HTML = (
@@ -90,7 +112,10 @@ CITATIONS_HTML = (
     "<p>Wu, W. (2016). Introduction to DLBreach — A Simplified "
     "Physically-Based Dam/Levee Breach Model, version 2016.4. Technical "
     "Report, Clarkson University.</p>"
-    "<p>Rana, N.M. (2026). DLBreach Dashboard (version 1.0.1) [software]. "
+    "<p>Palmen, L., & Kent, N. (2024). Use of a physically based erosion "
+    "breach model for water and tailings dams within a probabilistic "
+    "framework. <i>ANCOLD 2024 Conference Proceedings</i>.</p>"
+    "<p>Rana, N.M. (2026). DLBreach Dashboard (version 1.0.2) [software]. "
     "Zenodo. https://doi.org/10.5281/zenodo.23307440</p>"
     "<p style='color:#5E6B77'>Related talk (abstract submitted): Rana, N.M. "
     "(2027). DLBreach Dashboard: An Open-Source, Interactive, Monte Carlo Interface to a Physical-Based Dam Breach Algorithm. Lightning talk, International Commission on Large "

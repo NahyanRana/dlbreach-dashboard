@@ -1,7 +1,7 @@
-# QA report — v1.0.1 (11 October 2026)
+# QA report — v1.0.2 (24 October 2026)
 
-v1.0.1 changes documentation and citation only (see CHANGELOG); the code
-and its testing are those of v1.0.0.
+v1.0.1 and v1.0.2 change documentation and citation only (see CHANGELOG);
+the code and its testing are those of v1.0.0.
 
 v1.0.0 is v0.16 with the Windows download, local-only publication and the
 release citation; the testing below applies to it.
@@ -16,7 +16,7 @@ verified on a Windows computer.
 | `test_core.py` | Calculations; input files written back card for card (a made-up levee case, a made-up cored case with a clay cover, and Prof. Wu's eleven validation inputs); clay core read, written, switched off, partial sets, geometry and fit; clay cover thickness; report figures; data file paths; inputs offered for sampling | Pass |
 | `test_app_headless.py` | All eight pages × four worked examples, local and browser modes (64 page runs); scenario and Monte Carlo results; PDF and Word export | Pass |
 | `dev/qa_walkthrough.py` | A first-time user's path through all eight sections, pressing the real buttons | Pass |
-| `dev/qa_features.py` | 98 feature checks, below | 98 of 98 |
+| `dev/qa_features.py` | 97 feature checks, below | 97 of 97 |
 | Private project benchmarks | Benchmark reproduced exactly; its input written back card for card; practitioner run log read (kept out of the repository) | Pass |
 | Confidential-name scan | The 80 files that would be published | None found |
 

@@ -1,6 +1,7 @@
 cff-version: 1.2.0
 message: >-
-  If you use this dashboard, please cite DLBreach (Wu 2013, 2016) and this
+  If you use this dashboard, please cite DLBreach (Wu 2013, 2016), the
+  probabilistic method it implements (Palmen and Kent 2024), and this
   software, as below.
 title: DLBreach Dashboard
 abstract: >-
@@ -16,8 +17,8 @@ authors:
     affiliation: Geosyntec Consultants; University of Waterloo
     email: nahyan.rana@geosyntec.com
     orcid: https://orcid.org/0000-0002-7525-8431
-version: "1.0.1"
-date-released: "2026-10-12"
+version: "1.0.2"
+date-released: "2026-10-24"
 doi: 10.5281/zenodo.23307440
 identifiers:
   - type: doi
@@ -50,6 +51,29 @@ references:
     start: 837
     end: 851
     doi: 10.1061/(ASCE)HY.1943-7900.0000741
+  - type: conference-paper
+    authors:
+      - family-names: Palmen
+        given-names: Luke
+      - family-names: Kent
+        given-names: Nicholas
+    title: >-
+      Use of a physically based erosion breach model for water and tailings
+      dams within a probabilistic framework
+    collection-title: ANCOLD 2024 Conference Proceedings
+    year: 2024
+  - type: software
+    authors:
+      - name: HR Wallingford
+    title: Embrea
+    year: 2024
+    url: https://www.dambreach.org/tools/embrea
+  - type: software
+    authors:
+      - name: Kleinschmidt
+    title: McBreach
+    year: 2024
+    url: https://www.kleinschmidtgroup.com/mcbreach/
   - type: report
     authors:
       - family-names: Wu

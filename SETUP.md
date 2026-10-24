@@ -52,7 +52,7 @@ packages and installs them, so no manual `pip install` is needed.
 
 ## Using it
 
-Version 1.0.1 covers water-retaining dams. Solid waste (tailings, coal ash)
+Version 1.0.2 covers water-retaining dams. Solid waste (tailings, coal ash)
 support is paused; see `TAILINGS_TODO.md`.
 
 Work through the sections in the contents panel on the left, in order.

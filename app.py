@@ -601,6 +601,7 @@ def page_about():
     with a1:
         _about_block("The algorithm", ABOUT.ABOUT_MODEL)
         _about_block("This dashboard", ABOUT.ABOUT_DASHBOARD)
+        _about_block("Foundational methodology", ABOUT.FOUNDATIONS)
         _about_block("Getting started", ABOUT.GETTING_STARTED)
     with a2:
         st.markdown(f'<div id="{anchor("Questions and feedback")}"></div>'

@@ -2,6 +2,18 @@
 
 Notable changes to the DLBreach Dashboard.
 
+## [1.0.2] — foundational methodology (24 October 2026)
+
+No change to the dashboard's behaviour.
+
+- **Foundational methodology** section in the README and on the About
+  page: the dashboard implements the probabilistic DLBreach approach of
+  Palmen and Kent (2024, ANCOLD), building on Wu (2013, 2016); related
+  Monte Carlo breach tools Embrea (HR Wallingford) and McBreach
+  (Kleinschmidt) are cited.
+- Palmen and Kent (2024), Embrea and McBreach added to the references in
+  `CITATION.cff`, and to *How to cite*.
+
 ## [1.0.1] — citation and documentation (11 October 2026)
 
 No change to the dashboard's behaviour.

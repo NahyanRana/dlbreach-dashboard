@@ -19,7 +19,7 @@ It adds no physics to the model.
 <!-- Screenshots are mock-ups of the v1.0 layout. -->
 ![Model setup page: contents panel, status strip and live cross-section](docs/images/model-setup.png)
 
-> **Scope (v1.0.1).** Water-retaining embankment dams.
+> **Scope (v1.0.2).** Water-retaining embankment dams.
 > Solid waste dams (tailings, coal ash) are in development and switched off
 > in this build; see [TAILINGS_TODO.md](TAILINGS_TODO.md).
 
@@ -28,7 +28,8 @@ It adds no physics to the model.
 ## Contents
 
 - [What it does](#what-it-does)
-- [Two ways to use it](#two-ways-to-use-it)
+- [Foundational methodology](#foundational-methodology)
+- [How it runs](#how-it-runs)
 - [Obtaining DLBreach](#obtaining-dlbreach)
 - [Install and start (Windows)](#install-and-start-windows)
 - [Quick start](#quick-start)
@@ -60,6 +61,61 @@ Eight sections, worked through in order from a contents panel:
 
 *The screenshots are illustrative mock-ups of the layout. Their numbers
 are not DLBreach results.*
+
+## Foundational methodology
+
+The dashboard implements an established approach rather than a new method:
+the probabilistic use of a simplified, physically based breach model, as
+described by Palmen and Kent (2024).
+
+**The breach model.** DLBreach (Wu 2013, 2016) simulates embankment
+breaching from the hydraulics of the breach flow, sediment transport and
+the geotechnical stability of the embankment. It represents the
+embankment geometry, material properties and impoundment storage
+explicitly, and covers overtopping and piping in homogeneous and
+composite embankments. Its short run times make it practical to run many
+times.
+
+**The probabilistic framework.** Palmen and Kent (2024) set out a method
+for using DLBreach within a Monte Carlo framework:
+
+- define statistical distributions for uncertain inputs, such as material
+  properties and geometry;
+- sample them to create one DLBreach input file per realisation;
+- run each realisation and collate outputs such as peak discharge or
+  breach depth;
+- check that enough realisations have been run;
+- test outputs for correlation with inputs, to identify the parameters
+  that most influence the result;
+- select representative realisations for further deterministic modelling,
+  such as runout;
+- check the results for reasonableness against databases of historical
+  dam failures.
+
+The method also recommends an initial run with median values, varying
+individual parameters to identify the most influential ones. Other breach
+models that use a Monte Carlo approach include Embrea, formerly HR Breach
+(HR Wallingford 2024), and McBreach (Kleinschmidt 2024).
+
+**What the dashboard adds.** The dashboard provides an interactive
+interface to this approach: input in practitioner units with a live
+cross-section, sensitivity scenarios, Monte Carlo ensembles run in
+parallel, statistics and envelopes through time, comparison with the
+case histories of Froehlich (2016a) and Xu and Zhang (2009), and report
+export. It adds no physics to DLBreach. Every simulation is run by the
+published DLBreach executable.
+
+**References**
+
+- Palmen, L., & Kent, N. (2024). Use of a physically based erosion breach
+  model for water and tailings dams within a probabilistic framework.
+  *ANCOLD 2024 Conference Proceedings*.
+- Wu, W. (2013). Simplified physically based model of earthen embankment
+  breaching. *Journal of Hydraulic Engineering*, 139(8), 837–851.
+- Wu, W. (2016). *Introduction to DLBreach: A Simplified Physically-Based
+  Dam/Levee Breach Model*, version 2016.4. Clarkson University.
+- HR Wallingford (2024). *Embrea*. <https://www.dambreach.org/tools/embrea>
+- Kleinschmidt (2024). *McBreach*. <https://www.kleinschmidtgroup.com/mcbreach/>
 
 ## How it runs
 
@@ -204,7 +260,9 @@ for testing only; it is **not** DLBreach and its numbers mean nothing. See
 
 ## How to cite
 
-Please cite the model, and the dashboard where it was used:
+Please cite the model, the method it implements (Palmen and Kent 2024;
+see [Foundational methodology](#foundational-methodology)), and the
+dashboard where it was used:
 
 - Wu, W. (2013). Simplified physically based model of earthen embankment
   breaching. *Journal of Hydraulic Engineering*, 139(8), 837–851.
@@ -212,7 +270,10 @@ Please cite the model, and the dashboard where it was used:
 - Wu, W. (2016). *Introduction to DLBreach: A Simplified Physically-Based
   Dam/Levee Breach Model*, version 2016.4. Technical report, Clarkson
   University.
-- Rana, N.M. (2026). *DLBreach Dashboard* (version 1.0.1) [software].
+- Palmen, L., & Kent, N. (2024). Use of a physically based erosion breach
+  model for water and tailings dams within a probabilistic framework.
+  *ANCOLD 2024 Conference Proceedings*.
+- Rana, N.M. (2026). *DLBreach Dashboard* (version 1.0.2) [software].
   Zenodo. <https://doi.org/10.5281/zenodo.23307440>
 
 GitHub's **Cite this repository** button (from [CITATION.cff](CITATION.cff))
